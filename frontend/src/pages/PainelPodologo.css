@@ -1,0 +1,306 @@
+:root {
+    /* Cores profissionais para saúde */
+    --primary: #2b6cb0;
+    --primary-dark: #2c5282;
+    --primary-light: #ebf8ff;
+    --white: #ffffff;
+    --gray-light: #f7fafc;
+    --gray-medium: #e2e8f0;
+    --gray-dark: #4a5568;
+    --success: #38a169;
+    --warning: #dd6b20;
+    --danger: #e53e3e;
+    
+    /* Espaçamentos */
+    --space-xs: 0.5rem;
+    --space-sm: 1rem;
+    --space-md: 1.5rem;
+    --space-lg: 2rem;
+    --space-xl: 3rem;
+    
+    /* Bordas */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 1rem;
+    
+    /* Sombras */
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--gray-light);
+    color: var(--gray-dark);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--space-lg);
+}
+
+header {
+    background-color: var(--white);
+    box-shadow: var(--shadow-sm);
+    padding: var(--space-md) 0;
+    margin-bottom: var(--space-xl);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.logo img {
+    height: 60px;
+}
+
+.logo h1 {
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.user-menu {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+}
+
+.user-info {
+    text-align: right;
+}
+
+.user-name {
+    font-weight: 600;
+    color: var(--gray-dark);
+}
+
+.user-role {
+    font-size: 0.875rem;
+    color: var(--primary);
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--primary);
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+    gap: var(--space-lg);
+}
+
+.sidebar {
+    background-color: var(--white);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    box-shadow: var(--shadow-sm);
+    height: fit-content;
+}
+
+.nav-item {
+    padding: var(--space-sm);
+    border-radius: var(--radius-sm);
+    margin-bottom: var(--space-xs);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+}
+
+.nav-item:hover {
+    background-color: var(--primary-light);
+    color: var(--primary);
+}
+
+.nav-item.active {
+    background-color: var(--primary);
+    color: var(--white);
+}
+
+.main-content {
+    background-color: var(--white);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-sm);
+}
+
+.welcome-banner {
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: var(--white);
+    padding: var(--space-xl);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-lg);
+    position: relative;
+    overflow: hidden;
+}
+
+.welcome-banner::before {
+    content: "";
+    position: absolute;
+    top: -50px;
+    right: -50px;
+    width: 150px;
+    height: 150px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+.welcome-banner h2 {
+    font-size: 2rem;
+    margin-bottom: var(--space-sm);
+    position: relative;
+}
+
+.welcome-banner p {
+    opacity: 0.9;
+    max-width: 600px;
+    position: relative;
+    color: var(--white);
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.stat-card {
+    background-color: var(--white);
+    border-radius: var(--radius-md);
+    padding: var(--space-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--gray-medium);
+    text-align: center;
+}
+
+.stat-card h3 {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: var(--space-xs);
+}
+
+.stat-card p {
+    color: var(--gray-dark);
+    font-size: 0.875rem;
+}
+
+.actions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--space-md);
+    margin-bottom: var(--space-lg);
+}
+
+.action-card {
+    background-color: var(--white);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+    border: 1px solid var(--gray-medium);
+    cursor: pointer;
+}
+
+.action-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--primary);
+}
+
+.action-card i {
+    font-size: 2.5rem;
+    color: var(--primary);
+    margin-bottom: var(--space-md);
+}
+
+.action-card h3 {
+    margin-bottom: var(--space-sm);
+}
+
+.btn {
+    display: inline-block;
+    padding: var(--space-sm) var(--space-md);
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.btn-lg {
+    padding: var(--space-md) var(--space-lg);
+    font-size: 1.1rem;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+    
+    .welcome-banner {
+        padding: var(--space-lg);
+    }
+    
+    .header-content {
+        flex-direction: column;
+        gap: var(--space-md);
+    }
+    
+    .user-info {
+        text-align: center;
+        margin-top: var(--space-sm);
+    }
+}
+
+/* Ícones (simulando font-awesome) */
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    stroke-width: 0;
+    stroke: currentColor;
+    fill: currentColor;
+}
