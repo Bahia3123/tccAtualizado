@@ -5,7 +5,7 @@ import emailIcon from '../assets/img/images.png';
 import facebookIcon from '../assets/img/facebook-logo.avif';
 import youtubeIcon from '../assets/img/youtube-icon.png';
 import instagramIcon from '../assets/img/instagram-logo.jpg';
-
+import { Link } from 'react-router-dom';
 
 const Intro = () => {
   return (
@@ -20,13 +20,13 @@ const Intro = () => {
           <button>🔍</button>
         </div>
         <nav className="menu">
-          <a href="#">Podologia</a>
-          <a href="#">Serviços</a>
-          <a href="#">Produtos</a>
-          <a href="#">Home Care</a>
-          <a href="#">Seja um Franqueado</a>
-          <a href="#">Lojas</a>
-          <a href="#">Papo de pé</a>
+          <Link to="/">Podologia</Link>
+          <Link to="/">Serviços</Link>
+          <Link to="/">Produtos</Link>
+          <Link to="/">Home Care</Link>
+          <Link to="/">Seja um Franqueado</Link>
+          <Link to="/">Lojas</Link>
+          <Link to="/">Papo de pé</Link>
         </nav>
         <div className="social-icons">
           <br />
@@ -44,12 +44,12 @@ const Intro = () => {
         <h1>Bem-vindo ao Sistema de Podologia</h1>
         <p>Escolha uma das opções abaixo para continuar:</p>
         <div className="button-container">
-          <a href="/paciente" target="_blank" rel="noopener noreferrer">
-            Página do Paciente
-          </a>
-          <a href="/CadastroPodologo" target="_blank" rel="noopener noreferrer">
-            Página do Doutor
-          </a>
+          <Link to="/paciente"  rel="noopener noreferrer">
+            Registrar Paciente
+          </Link>
+          <Link to="/CadastroPodologo"  rel="noopener noreferrer">
+            Registrar Podólogo
+          </Link>
         </div>
       </main>
 
@@ -64,10 +64,10 @@ const Intro = () => {
           <div className="footer-middle">
             <h4>Serviços</h4>
             <ul>
-              <li><a href="/tratamentos">Tratamentos Podológicos</a></li><br />
-              <li><a href="/prevenção">Prevenção de Problemas nos Pés</a></li><br />
-              <li><a href="/consultas">Consultas de Avaliação</a></li><br />
-              <li><a href="/cirurgia-podologia">Cirurgia Podológica</a></li><br />
+              <li><Link to="/tratamentos">Tratamentos Podológicos</Link></li><br />
+              <li><Link to="/prevenção">Prevenção de Problemas nos Pés</Link></li><br />
+              <li><Link to="/consultas">Consultas de Avaliação</Link></li><br />
+              <li><Link to="/cirurgia-podologia">Cirurgia Podológica</Link></li><br />
             </ul>
           </div>
           <div className="footer-right">

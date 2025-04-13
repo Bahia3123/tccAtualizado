@@ -1,21 +1,39 @@
 import React, { useState } from 'react';
-import './paciente.css'; // ajuste conforme onde você colocar o CSS
+import axios from 'axios';
+import './paciente.css';
 import { useNavigate } from 'react-router-dom';
+
 
 const Paciente = () => {
   const [nome, setNome] = useState('');
   const [dataNascimento, setDataNascimento] = useState('');
+  const [cpf, setCpf] = useState('');
   const navigate = useNavigate();
+  
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Aqui você pode fazer a requisição ao backend, ex:
-    // axios.post('/api/pacientes', { nome, dataNascimento })
+  
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  try {
+    await axios.post('http://localhost:5000/api/pacientes', {
+      nome,
+      cpf,
+      dataNascimento
+    });
 
     alert(`Paciente ${nome} cadastrado com sucesso!`);
     setNome('');
+    setCpf('');
     setDataNascimento('');
-  };
+    navigate('/PainelPodologo');
+  } catch (error) {
+    console.error('Erro ao cadastrar paciente:', error);
+    alert('Erro ao cadastrar paciente. Tente novamente.');
+  }
+};
+
 
   return (
     <div className="form-container">
@@ -30,6 +48,17 @@ const Paciente = () => {
           placeholder="Digite seu nome completo"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
+        />
+
+        <label htmlFor="cpf">CPF:</label>
+        <input
+          type="text"
+          id="cpf"
+          name="cpf"
+          required
+          placeholder="Digite o CPF"
+          value={cpf}
+          onChange={(e) => setCpf(e.target.value)}
         />
 
         <label htmlFor="data_nascimento">Data Nascimento:</label>

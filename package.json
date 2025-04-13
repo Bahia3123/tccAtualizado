@@ -1,0 +1,11 @@
+{
+  "name": "tccatualizado",
+  "version": "1.0.0",
+  "description": "//Dentro da API\r npm init\r npm install express\r npm install express mysql2 cors body-parser\r // Dentro do frontEnd\r npm install axios\r npm install react-router-dom\r npm start",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
