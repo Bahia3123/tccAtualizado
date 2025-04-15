@@ -1,27 +1,24 @@
-import { createContext, useContext, useState, useEffect } from "react";
+// src/context/userContext.js
+import { createContext, useContext, useState } from 'react';
 
 const UserContext = createContext();
 
-export const UserProvider = ({ children }) => {
-  const [userData, setUserData] = useState(() => {
-    const storedUserData = localStorage.getItem("userData");
-    return storedUserData ? JSON.parse(storedUserData) : null;
-  });
-
-  // Quando os dados do usuário mudam, vamos armazená-los no localStorage
-  useEffect(() => {
-    if (userData) {
-      localStorage.setItem("userData", JSON.stringify(userData));
-    } else {
-      localStorage.removeItem("userData");
-    }
-  }, [userData]);
+export function UserProvider({ children }) {
+  const [user, setUser] = useState(null);
 
   return (
-    <UserContext.Provider value={{ userData, setUserData }}>
+    <UserContext.Provider value={{ user, setUser }}>
       {children}
     </UserContext.Provider>
   );
-};
+}
 
-export const useUser = () => useContext(UserContext);
+export function useUser() {
+  const context = useContext(UserContext);
+  
+  if (context === undefined) {
+    throw new Error('useUser must be used within a UserProvider');
+  }
+  
+  return context;
+}

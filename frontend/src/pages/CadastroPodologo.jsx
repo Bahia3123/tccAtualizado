@@ -27,7 +27,7 @@ function CadastroPodologo() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3001/cadastroPodologo', form);
+      const response = await axios.post('http://localhost:3001/CadastroPodologo', form);
 
       if (response.status === 200 || response.status === 201) {
         // Sucesso
@@ -40,7 +40,7 @@ function CadastroPodologo() {
     } catch (err) {
       console.error('Erro no cadastro:', err);
       alert('Usuario já cadastrado!! Faça Login para continuar')
-      navigate('/LoginPodologo');
+      navigate('/LoginPodologo')
     }
   };
 
