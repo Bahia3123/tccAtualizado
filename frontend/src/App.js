@@ -9,6 +9,7 @@ import Paciente from './pages/paciente';
 import HistoricoPodologo from './pages/HistoricoPodologo';
 import CadastroPodologo from './pages/CadastroPodologo';
 import PainelPodologo from './pages/PainelPodologo';
+import FormularioPrescricaoPD from './pages/FormularioPrescricaoPD';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/HistoricoPodologo" element={<HistoricoPodologo />} />
           <Route path="/LoginPodologo" element={<LoginPodologo />} />
           <Route path="/Formulario" element={<Formulario />} />
+          <Route path="/FormularioPrescricaoPD" element={<FormularioPrescricaoPD />} />
         </Routes>
       </Router>
     </UserProvider>

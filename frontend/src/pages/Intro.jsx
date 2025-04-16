@@ -13,7 +13,8 @@ const Intro = () => {
       <header className="header">
         <div className="logo">
           <img src={logo} alt="Logo" />
-          <h1>Cura Pé</h1>
+          <div className='titulo'> <h1>Cura Pé</h1>
+          </div>
         </div>
         <div className="search-box">
           <input type="text" placeholder="Busque no site..." />
