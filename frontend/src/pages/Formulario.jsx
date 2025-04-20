@@ -1,9 +1,13 @@
 import React, { useState } from 'react';
-import { useUser } from '../context/userContext';  // Usando o contexto para atualizar os dados
+import { useUser } from '../context/userContext';
+import { useHistory } from '../context/historyContext';
+import { useNavigate } from 'react-router-dom';
 import './Formulario.css';
 
 export default function Formulario() {
-  const { setUserData } = useUser();  // Acessando a função para atualizar os dados no contexto
+  const { setUser } = useUser();
+  const { adicionarPaciente } = useHistory();
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     nome: '',
@@ -25,13 +29,41 @@ export default function Formulario() {
     }));
   };
 
+  const calcularIdade = (dataNascimento) => {
+    if (!dataNascimento) return 0;
+    const hoje = new Date();
+    const nascimento = new Date(dataNascimento);
+    let idade = hoje.getFullYear() - nascimento.getFullYear();
+    const m = hoje.getMonth() - nascimento.getMonth();
+    if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
+      idade--;
+    }
+    return idade;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Atualizando os dados no contexto com os dados preenchidos no formulário
-    setUserData(formData);
+    
+    // Verifica se os campos obrigatórios estão preenchidos
+    if (!formData.nome || !formData.cpf_rg || !formData.data_nascimento || !formData.telefone) {
+      alert('Por favor, preencha todos os campos obrigatórios');
+      return;
+    }
 
-    // Redireciona para a página de Histórico após enviar os dados
-    window.open('../html/indicacaoTerapeutica.html', '_blank');
+    // Cria o objeto paciente completo
+    const paciente = {
+      ...formData,
+      status: "ativo",
+      idade: calcularIdade(formData.data_nascimento),
+      dataHoraCadastro: new Date().toLocaleString(),
+    };
+
+    // Adiciona aos contextos
+    setUser(paciente);
+    adicionarPaciente(paciente);
+
+    // Redireciona para a página de histórico
+    navigate('/FormularioPrescricaoPD');
   };
 
   return (
@@ -41,40 +73,116 @@ export default function Formulario() {
         {/* Dados Pessoais */}
         <fieldset>
           <legend>Dados Pessoais</legend>
-          <label htmlFor="nome">Nome Completo:</label>
-          <input type="text" id="nome" name="nome" required value={formData.nome} onChange={handleChange} />
+          <div className="form-group">
+            <label htmlFor="nome">Nome Completo:*</label>
+            <input 
+              type="text" 
+              id="nome" 
+              name="nome" 
+              required 
+              value={formData.nome} 
+              onChange={handleChange} 
+            />
+          </div>
 
-          <label htmlFor="cpf_rg">CPF/RG:</label>
-          <input type="text" id="cpf_rg" name="cpf_rg" required value={formData.cpf_rg} onChange={handleChange} />
+          <div className="form-group">
+            <label htmlFor="cpf_rg">CPF/RG:*</label>
+            <input 
+              type="text" 
+              id="cpf_rg" 
+              name="cpf_rg" 
+              required 
+              value={formData.cpf_rg} 
+              onChange={handleChange} 
+            />
+          </div>
 
-          <label htmlFor="data_nascimento">Data de Nascimento:</label>
-          <input type="date" id="data_nascimento" name="data_nascimento" required value={formData.data_nascimento} onChange={handleChange} />
+          <div className="form-group">
+            <label htmlFor="data_nascimento">Data de Nascimento:*</label>
+            <input 
+              type="date" 
+              id="data_nascimento" 
+              name="data_nascimento" 
+              required 
+              value={formData.data_nascimento} 
+              onChange={handleChange} 
+            />
+          </div>
         </fieldset>
 
         {/* Histórico Médico */}
         <fieldset>
           <legend>Histórico Médico</legend>
-          <label htmlFor="queixa_principal">Queixa Principal:</label>
-          <input type="text" id="queixa_principal" name="queixa_principal" value={formData.queixa_principal} onChange={handleChange} />
+          <div className="form-group">
+            <label htmlFor="queixa_principal">Queixa Principal:</label>
+            <input 
+              type="text" 
+              id="queixa_principal" 
+              name="queixa_principal" 
+              value={formData.queixa_principal} 
+              onChange={handleChange} 
+            />
+          </div>
 
-          <label htmlFor="doenca_cronica">Doença Crônica:</label>
-          <input type="text" id="doenca_cronica" name="doenca_cronica" value={formData.doenca_cronica} onChange={handleChange} />
+          <div className="form-group">
+            <label htmlFor="doenca_cronica">Doença Crônica:</label>
+            <input 
+              type="text" 
+              id="doenca_cronica" 
+              name="doenca_cronica" 
+              value={formData.doenca_cronica} 
+              onChange={handleChange} 
+            />
+          </div>
 
-          <label htmlFor="alergia">Alergia:</label>
-          <input type="text" id="alergia" name="alergia" value={formData.alergia} onChange={handleChange} />
+          <div className="form-group">
+            <label htmlFor="alergia">Alergia:</label>
+            <input 
+              type="text" 
+              id="alergia" 
+              name="alergia" 
+              value={formData.alergia} 
+              onChange={handleChange} 
+            />
+          </div>
 
-          <label htmlFor="medicamento">Medicamento em Uso:</label>
-          <input type="text" id="medicamento" name="medicamento" value={formData.medicamento} onChange={handleChange} />
+          <div className="form-group">
+            <label htmlFor="medicamento">Medicamento em Uso:</label>
+            <input 
+              type="text" 
+              id="medicamento" 
+              name="medicamento" 
+              value={formData.medicamento} 
+              onChange={handleChange} 
+            />
+          </div>
         </fieldset>
 
         {/* Contato */}
         <fieldset>
           <legend>Contato</legend>
-          <label htmlFor="telefone">Telefone:</label>
-          <input type="tel" id="telefone" name="telefone" required value={formData.telefone} onChange={handleChange} />
+          <div className="form-group">
+            <label htmlFor="telefone">Telefone:*</label>
+            <input 
+              type="tel" 
+              id="telefone" 
+              name="telefone" 
+              required 
+              value={formData.telefone} 
+              onChange={handleChange} 
+            />
+          </div>
 
-          <label htmlFor="email">E-mail:</label>
-          <input type="email" id="email" name="email" required value={formData.email} onChange={handleChange} />
+          <div className="form-group">
+            <label htmlFor="email">E-mail:</label>
+            <input 
+              type="email" 
+              id="email" 
+              name="email" 
+              value={formData.email} 
+              onChange={handleChange} 
+            />
+          </div>
         </fieldset>
 
         {/* Botão de Envio */}

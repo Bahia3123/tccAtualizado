@@ -1,9 +1,10 @@
-// src/context/userContext.js
 import { createContext, useContext, useState } from 'react';
 
+// Contexto para os dados do paciente atual
 const UserContext = createContext();
 
-export function UserProvider({ children }) {
+// Provider para o contexto do usuário
+export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   return (
@@ -11,14 +12,15 @@ export function UserProvider({ children }) {
       {children}
     </UserContext.Provider>
   );
-}
+};
 
-export function useUser() {
+// Hook para acessar o contexto de usuário
+export const useUser = () => {
   const context = useContext(UserContext);
-  
+
   if (context === undefined) {
-    throw new Error('useUser must be used within a UserProvider');
+    throw new Error('useUser precisa estar dentro de um UserProvider');
   }
-  
+
   return context;
-}
+};
