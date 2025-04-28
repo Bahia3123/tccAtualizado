@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.post("/CadastroPodologo", (req, res) => {
   const { nome, ncc, consultorio, telefone, email } = req.body;
 
-  const query = `INSERT INTO doutores (nome, ncc, consultorio, telefone, email) VALUES (?, ?, ?, ?, ?)`;
+  const query = `INSERT INTO registro_podologo (nome, ncc, consultorio, telefone, email) VALUES (?, ?, ?, ?, ?)`;
 
   db.query(query, [nome, ncc, consultorio, telefone, email], (err, result) => {
     if (err) {
@@ -23,24 +23,25 @@ app.post("/CadastroPodologo", (req, res) => {
 });
 
 // Rota para cadastrar paciente
-app.post("/paciente", (req, res) => {
-  const { nome, cpf, dataNascimento } = req.body;
+app.post("/Paciente", (req, res) => {
+  const { nome, cpf_rg, data_nascimento, queixa_principal, doenca_cronica, alergia, medicamento, telefone, email } = req.body;
 
-  const sql = 'INSERT INTO pacientes (nome, cpf, data_nascimento) VALUES (?, ?, ?)';
-  db.query(sql, [nome, cpf, dataNascimento], (err, result) => {
+  const query = `INSERT INTO paciente (nome, cpf_rg, data_nascimento, queixa_principal, doenca_cronica, alergia, medicamento, telefone, email) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+
+  db.query(query, [nome, cpf_rg, data_nascimento, queixa_principal, doenca_cronica, alergia, medicamento, telefone, email], (err, result) => {
     if (err) {
-      console.error('Erro ao inserir paciente:', err);
-      return res.status(500).json({ error: 'Erro ao cadastrar paciente' });
+      console.error(err);
+      return res.status(500).send('Erro ao salvar paciente');
     }
-
-    res.status(201).json({ message: 'Paciente cadastrado com sucesso!' });
+    res.status(200).send('Paciente adicionado com sucesso');
   });
 });
 
 //loginPodologo
 app.post('/LoginPodologo', (req, res) => {
   const { email, ncc } = req.body;
-  const sql = 'SELECT * FROM doutores WHERE email = ? AND ncc = ?';
+  const sql = 'SELECT * FROM registro_podologo WHERE email = ? AND ncc = ?';
 
   db.query(sql, [email, ncc], (err, results) => {
     if (err) {

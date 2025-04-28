@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { useHistory } from "../context/historyContext";
+import { useUser } from "../context/userContext";  // Usando useUser para acessar o contexto
+import { useHistory } from "../context/historyContext";  // Mantendo o HistoryContext para o restante
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import jsPDF from 'jspdf';
@@ -16,6 +17,7 @@ export default function HistoricoPodologo() {
   const [showSuccess, setShowSuccess] = useState("");
   const location = useLocation();
   const { historico, inativarPaciente, excluirPaciente } = useHistory();
+  const {user} = useUser();
 
   const calcularIdade = (dataNascimento) => {
     if (!dataNascimento) return 0;
@@ -135,17 +137,8 @@ export default function HistoricoPodologo() {
   };
 
   return (
-    <motion.div
-      className="historico-container"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-    >
-      <motion.header
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-      >
+    <motion.div className="historico-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+      <motion.header initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
         <div className="container header-content">
           <div className="logo">
             <img src={logo} alt="logo" />
@@ -153,9 +146,12 @@ export default function HistoricoPodologo() {
           </div>
           <div className="user-menu">
             <div className="user-info">
+              <div className="user-name">{user?.nome ? `Dr(a). ${user.nome}` : "Usuário"}</div>
               <div className="user-role">Podólogo</div>
             </div>
-            <div className="user-avatar">PD</div>
+            <div className="user-avatar">
+              {user?.nome ? user.nome.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2) : "??"}
+            </div>
           </div>
         </div>
       </motion.header>

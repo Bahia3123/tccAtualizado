@@ -1,12 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
+import axios from 'axios';
 import './PainelPodologo.css';
 import logo from '../assets/img/logo-curape.png';
 import { useUser } from '../context/userContext';
 
 const PainelPodologo = () => {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
   const navigate = useNavigate();
 
   const containerVariants = {
@@ -14,36 +16,51 @@ const PainelPodologo = () => {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
   };
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get('/api/usuario'); 
+        setUser(response.data);
+      } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+      }
+    };
+    
+    fetchUser();
+  }, [setUser]);
+
   return (
-    <motion.div initial="hidden" animate="visible" variants={containerVariants}>
-      <header>
-        <div className="container header-content">
-          <div className="logo">
-            <img src={logo} alt="logo" />
-            <h1>CuraPé</h1>
-          </div>
-          <div className="user-menu">
-            <div className="user-info">
-              <div className="user-name">
-                {user?.nome ? `Dr(a). ${user.nome}` : "Usuário"}
+    <>
+      <motion.div initial="hidden" animate="visible" variants={containerVariants}>
+        <header>
+          <div className="container header-content">
+            <div className="logo">
+              <img src={logo} alt="logo" />
+              <h1>CuraPé</h1>
+            </div>
+            <div className="user-menu">
+              <div className="user-info">
+                <div className="user-name">
+                  {user?.nome ? `Dr(a). ${user.nome}` : "Usuário"}
+                </div>
+                <div className="user-role">Podólogo</div>
               </div>
-              <div className="user-role">Podólogo</div>
-            </div>
-            <div className="user-avatar">
-              {user?.nome
-                ? user.nome.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
-                : "??"}
+              <div className="user-avatar">
+                {user?.nome
+                  ? user.nome.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
+                  : "??"}
+              </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
+      </motion.div>
 
       <div className="container">
         <div className="dashboard">
           <aside className="sidebar">
             <nav>
               <NavLink
-                to="/"
+                to="/PainelPodologo"
                 className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
               >
                 <svg className="icon" viewBox="0 0 20 20">
@@ -131,7 +148,7 @@ const PainelPodologo = () => {
           </main>
         </div>
       </div>
-    </motion.div>
+    </>
   );
 };
 

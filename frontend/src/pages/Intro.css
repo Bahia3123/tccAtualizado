@@ -56,7 +56,7 @@ body {
 .header {
   background-color: white;
   box-shadow: var(--shadow-md);
-  position: sticky;
+  position: static;
   top: 0;
   z-index: 1000;
   padding: var(--space-sm) 0;
@@ -139,7 +139,7 @@ body {
 }
 
 .menu a {
-  color: var(--dark);
+  color: black;
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
@@ -199,7 +199,7 @@ body {
 }
 
 .container h1 {
-  color: var(--primaria);
+  color: #211b15;
   font-size: 2.5rem;
   margin-bottom: var(--space-md);
   font-weight: 700;
@@ -222,7 +222,7 @@ body {
   display: inline-block;
   padding: var(--space-md) var(--space-lg);
   background-color: var(--primaria);
-  color: white;
+  color: black;
   text-decoration: none;
   border-radius: var(--radius-md);
   font-weight: 600;
@@ -346,4 +346,21 @@ footer {
     padding: var(--space-sm) var(--space-md);
     font-size: 1rem;
   }
+}
+/* Animação de Entrada */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.container,
+.header,
+footer {
+  animation: fadeInUp 1s ease-out both;
 }

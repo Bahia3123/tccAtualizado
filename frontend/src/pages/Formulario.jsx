@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import { useUser } from '../context/userContext';
 import { useHistory } from '../context/historyContext';
 import { useNavigate } from 'react-router-dom';
 import './Formulario.css';
 
 export default function Formulario() {
-  const { setUser } = useUser();
   const { adicionarPaciente } = useHistory();
   const navigate = useNavigate();
 
@@ -43,7 +41,7 @@ export default function Formulario() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     // Verifica se os campos obrigatórios estão preenchidos
     if (!formData.nome || !formData.cpf_rg || !formData.data_nascimento || !formData.telefone) {
       alert('Por favor, preencha todos os campos obrigatórios');
@@ -59,11 +57,28 @@ export default function Formulario() {
     };
 
     // Adiciona aos contextos
-    setUser(paciente);
     adicionarPaciente(paciente);
 
-    // Redireciona para a página de histórico
-    navigate('/FormularioPrescricaoPD');
+    // Envia os dados para o backend
+    fetch('http://localhost:3001/Paciente', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(paciente),
+    })
+      .then((response) => {
+        if (response.ok) {
+          alert('Paciente cadastrado com sucesso!');
+          navigate('/FormularioPrescricaoPD');
+        } else {
+          alert('Erro ao salvar paciente');
+        }
+      })
+      .catch((error) => {
+        console.error('Erro:', error);
+        alert('Erro ao salvar paciente');
+      });
   };
 
   return (

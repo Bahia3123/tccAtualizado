@@ -8,7 +8,7 @@ function CadastroPodologo() {
   const [form, setForm] = useState({
     nome: '',
     ncc: '',
-    consultorio: '',
+    consutorio: '',
     telefone: '',
     email: ''
   });
