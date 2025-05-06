@@ -1,5 +1,5 @@
 import React from 'react';
-import './Intro.css';
+import'../componentes/css/Intro.css'; 
 import logo from '../assets/img/logo-curape.png';
 import emailIcon from '../assets/img/images.png';
 import facebookIcon from '../assets/img/facebook-logo.avif';
@@ -7,8 +7,11 @@ import youtubeIcon from '../assets/img/youtube-icon.png';
 import instagramIcon from '../assets/img/instagram-logo.jpg';
 import { Link } from 'react-router-dom';
 
+
 const Intro = () => {
+
   return (
+    
     <div className="fade-in">
       <div className="container">
         <header className="header">
@@ -46,10 +49,10 @@ const Intro = () => {
           <p>Escolha uma das opções abaixo para continuar:</p>
           <div className="button-container">
             <Link to="/paciente" rel="noopener noreferrer">
-              Registrar Paciente
+              Login Paciente
             </Link>
-            <Link to="/CadastroPodologo" rel="noopener noreferrer">
-              Registrar Podólogo
+            <Link to="/LoginPodologo" rel="noopener noreferrer">
+              Login Podólogo
             </Link>
           </div>
         </main>
@@ -86,5 +89,6 @@ const Intro = () => {
     </div>
   );
 };
+ 
 
 export default Intro;

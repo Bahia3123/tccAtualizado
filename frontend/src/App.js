@@ -13,7 +13,7 @@ import LoginPodologo from './pages/LoginPodologo';
 import PainelPodologo from './pages/PainelPodologo';
 import HistoricoPodologo from './pages/HistoricoPodologo';
 import FormularioPrescricaoPD from './pages/FormularioPrescricaoPD';
-import Paciente from './pages/Paciente';
+import LoginPaciente from './pages/LoginPaciente';
 import Formulario from './pages/Formulario';
 
 function App() {
@@ -28,7 +28,7 @@ function App() {
             <Route path="/PainelPodologo" element={<PainelPodologo />} />
             <Route path="/HistoricoPodologo" element={<HistoricoPodologo />} />
             <Route path="/FormularioPrescricaoPD" element={<FormularioPrescricaoPD />} />
-            <Route path="/Paciente" element={<Paciente />} />
+            <Route path="/LoginPaciente" element={<LoginPaciente />} />
             <Route path="/Formulario" element={<Formulario />} />
             <Route path="*" element={<Intro />} /> {/* Rota fallback */}
           </Routes>

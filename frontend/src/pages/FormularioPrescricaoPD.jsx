@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './FormularioPrescricaoPD.css';
+import '../componentes/css/FormularioPrescricaoPD.css';
 
 const FormularioPrescricaoPD = () => {
   const [formData, setFormData] = useState({

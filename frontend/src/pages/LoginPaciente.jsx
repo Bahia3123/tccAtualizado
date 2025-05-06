@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './paciente.css';
+import '../componentes/css/LoginPaciente.css';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -17,7 +17,7 @@ const handleSubmit = async (e) => {
   e.preventDefault();
 
   try {
-    await axios.post('http://localhost:5000/api/pacientes', {
+    await axios.post('http://localhost:3001/LoginPaciente', {
       nome,
       cpf,
       dataNascimento

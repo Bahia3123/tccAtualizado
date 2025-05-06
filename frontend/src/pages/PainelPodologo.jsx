@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 import axios from 'axios';
-import './PainelPodologo.css';
+import '../componentes/css/PainelPodologo.css';;
 import logo from '../assets/img/logo-curape.png';
 import { useUser } from '../context/userContext';
 

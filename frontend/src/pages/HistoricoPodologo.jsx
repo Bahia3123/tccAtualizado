@@ -5,7 +5,7 @@ import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import "./HistoricoPodologo.css";
+import '../componentes/css/HistoricoPodologo.css';
 import logo from "../assets/img/logo-curape.png";
 
 export default function HistoricoPodologo() {

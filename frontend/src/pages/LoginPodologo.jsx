@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/userContext';
-import './LoginPodologo.css';
+import '../componentes/css/LoginPodologo.css';
 
 const LoginPodologo = () => {
   const [form, setForm] = useState({

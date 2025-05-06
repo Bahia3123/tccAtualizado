@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from '../context/historyContext';
 import { useNavigate } from 'react-router-dom';
-import './Formulario.css';
+import '../componentes/css/Formulario.css';
 
 export default function Formulario() {
   const { adicionarPaciente } = useHistory();
@@ -70,7 +70,7 @@ export default function Formulario() {
       .then((response) => {
         if (response.ok) {
           alert('Paciente cadastrado com sucesso!');
-          navigate('/FormularioPrescricaoPD');
+          navigate('/HistoricoPodologo');
         } else {
           alert('Erro ao salvar paciente');
         }

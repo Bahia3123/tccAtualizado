@@ -60,6 +60,26 @@ app.post('/LoginPodologo', (req, res) => {
   });
 });
 
+    app.post('/LoginPaciente', (req, res) => {
+      const { email, ncc } = req.body;
+      const sql = 'SELECT * FROM paciente WHERE email = ? AND cpf_rg = ? AND data_nascimento = ?';
+    
+      db.query(sql, [email, ncc, data_nascimento], (err, results) => {
+        if (err) {
+          console.error('Erro na consulta:', err);
+          return res.status(500).json({ error: 'Erro no servidor' });
+        }
+    
+        if (results.length > 0) {
+          return res.status(200).json({
+            success: true,
+            nome: results[0].nome
+          });
+        } else {
+          return res.status(401).json({ success: false, error: 'Credenciais inválidas' });
+        }
+  });
+});
 
 
 // Iniciar o servidor
