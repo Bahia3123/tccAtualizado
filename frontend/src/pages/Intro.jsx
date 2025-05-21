@@ -1,94 +1,196 @@
 import React from 'react';
-import'../componentes/css/Intro.css'; 
-import logo from '../assets/img/logo-curape.png';
-import emailIcon from '../assets/img/images.png';
-import facebookIcon from '../assets/img/facebook-logo.avif';
-import youtubeIcon from '../assets/img/youtube-icon.png';
-import instagramIcon from '../assets/img/instagram-logo.jpg';
-import { Link } from 'react-router-dom';
+import '../componentes/css/Intro.css';
 
 
-const Intro = () => {
-
+const PaginaInicial = () => {
   return (
-    
-    <div className="fade-in">
-      <div className="container">
-        <header className="header">
-          <div className="logo">
-            <img src={logo} alt="Logo" />
-            <div className='titulo'> <h1>Cura Pé</h1></div>
+    <div>
+      <header>
+        <div className="header-left">
+          <img
+            src="../img/logo-curape.png"
+            alt=""
+            style={{
+              width: '65px',
+              height: '65px',
+              objectFit: 'cover',
+              borderRadius: '30px',
+            }}
+          />
+          <div className="logo" aria-label="Logo do site de Podologia">
+            CuraPé
           </div>
-          <div className="search-box">
-            <input type="text" placeholder="Busque no site..." />
-            <button>🔍</button>
+          <div className="contact-info" aria-label="Informações de contato e redes sociais">
+            <span>
+              Contato: <a href="tel:+5511999999999" aria-label="Telefone">(11) 94002-8922</a>
+            </span>
+            <span> | </span>
+            <a
+              href="https://www.facebook.com/podologia"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+            >
+              Facebook
+            </a>
+            <span> | </span>
+            <a
+              href="https://www.instagram.com/podologia"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+            >
+              Instagram
+            </a>
+            <span> | </span>
+            <a href="mailto:contato@podologia.com" aria-label="Enviar email">
+              Fale Conosco
+            </a>
           </div>
-          <nav className="menu">
-            <Link to="/">Podologia</Link>
-            <Link to="/">Serviços</Link>
-            <Link to="/">Produtos</Link>
-            <Link to="/">Home Care</Link>
-            <Link to="/">Seja um Franqueado</Link>
-            <Link to="/">Lojas</Link>
-            <Link to="/">Papo de pé</Link>
-          </nav>
-          <div className="social-icons">
-            <br />
-            <img src={emailIcon} alt="Email" />
-            <br />
-            <img src={facebookIcon} alt="Facebook" />
-            <br />
-            <img src={youtubeIcon} alt="YouTube" />
-            <br />
-            <img src={instagramIcon} alt="Instagram" />
-          </div>
-        </header>
+        </div>
+        <nav className="login-container" aria-label="Área de Login">
+          <h2>Login</h2>
+          <a href="  " className="login-btn" aria-describedby="desc-login-paciente">
+            Paciente
+          </a>
+          <a href="  " className="login-btn" aria-describedby="desc-login-prestador">
+            Podólogo
+          </a>
+        </nav>
+      </header>
 
-        <main className="container">
-          <h1>Bem-vindo ao Sistema de Podologia</h1>
-          <p>Escolha uma das opções abaixo para continuar:</p>
-          <div className="button-container">
-            <Link to="/paciente" rel="noopener noreferrer">
-              Login Paciente
-            </Link>
-            <Link to="/LoginPodologo" rel="noopener noreferrer">
-              Login Podólogo
-            </Link>
-          </div>
-        </main>
+      <main>
+        <h1>Bem-vindo à CuraPé</h1>
+        <p className="intro">
+          Seu espaço dedicado ao cuidado dos seus pés com excelência e profissionais qualificados.
+          Navegue pelo site e conheça nossos serviços, agende consultas e mantenha a saúde dos seus pés em dia!
+        </p>
 
-        <footer>
-          <div className="footer_content">
-            <div className="footer-left">
-              <h4>Sobre Nós</h4>
+        <section className="image-section" aria-label="Seção de imagens ilustrativas com descrições">
+          <article className="image-block">
+            <div className="image-placeholder" role="img" aria-label="Imagem Ilustrativa Cuidados Básicos">
+              <img
+                src="../img/servicos-de-podologia-em-sorocaba.jpg.webp"
+                alt="imagem"
+                style={{
+                  width: '95%',
+                  height: '95%',
+                  objectFit: 'cover',
+                  borderRadius: '8px',
+                }}
+              />
+            </div>
+            <div className="image-description">
+              <h3>Cuidados Básicos com os Pés</h3>
               <p>
-                Na Cura Pé, oferecemos cuidados especializados para a saúde dos seus pés. Nosso objetivo é promover o bem-estar e aliviar as dores relacionadas aos pés.
+                Os cuidados básicos incluem o corte e lixamento das unhas, tratamento de calosidades e calos, além da hidratação e cuidados com a pele dos pés.
               </p>
             </div>
-            <div className="footer-middle">
-              <h4>Serviços</h4>
-              <ul>
-                <li><Link to="/tratamentos">Tratamentos Podológicos</Link></li><br />
-                <li><Link to="/prevenção">Prevenção de Problemas nos Pés</Link></li><br />
-                <li><Link to="/consultas">Consultas de Avaliação</Link></li><br />
-                <li><Link to="/cirurgia-podologia">Cirurgia Podológica</Link></li><br />
-              </ul>
+          </article>
+
+          <article className="image-block">
+            <div className="image-placeholder" role="img" aria-label="Imagem Ilustrativa Tratamentos Personalizados">
+              <img
+                src="../img/unha-encravada-em-sorocaba-feethouse-710x375.jpg"
+                alt="imagem"
+                style={{
+                  width: '95%',
+                  height: '95%',
+                  objectFit: 'cover',
+                  borderRadius: '8px',
+                }}
+              />
             </div>
-            <div className="footer-right">
-              <h4>Contato</h4>
-              <p>Telefone: (XX) XXXX-XXXX</p>
-              <p>Email: contato@clinicapodologia.com</p>
-              <p>Endereço: Rua Exemplo, 123, Cidade, Estado</p>
+            <div className="image-description">
+              <h3>Tratamento de Unhas Encravadas</h3>
+              <p>
+                As unhas encravadas podem ser extremamente dolorosas e, se não tratadas corretamente, podem levar a infecções.
+                O podólogo é capacitado para remover unhas encravadas e aplicar técnicas que evitam a reincidência do problema.
+              </p>
             </div>
-          </div>
-          <div className="footer-bottom">
-            <p>&copy; 2025 Cura Pé. Todos os direitos reservados.</p>
-          </div>
-        </footer>
-      </div>
+          </article>
+
+          <article className="image-block">
+            <div className="image-placeholder" role="img" aria-label="Imagem Ilustrativa Tratamentos Personalizados">
+              <img
+                src="../img/Podoposturologia.jpg"
+                alt="imagem"
+                style={{
+                  width: '95%',
+                  height: '95%',
+                  objectFit: 'cover',
+                  borderRadius: '8px',
+                }}
+              />
+            </div>
+            <div className="image-description">
+              <h3>Podoposturologia</h3>
+              <p>
+                A podoposturologia envolve a avaliação da postura e da pisada, identificando problemas que podem afetar a saúde dos pés e do corpo.
+                O podólogo prescreve palmilhas ortopédicas personalizadas para corrigir esses problemas.
+                Este é um dos serviços de podologia que pode ajudar a melhorar a postura e a qualidade de vida.
+              </p>
+            </div>
+          </article>
+
+          <article className="image-block">
+            <div className="image-placeholder" role="img" aria-label="Imagem Ilustrativa Consultas e Agenda">
+              <img
+                src="../img/deformidades.jpg"
+                alt="imagem"
+                style={{
+                  width: '95%',
+                  height: '95%',
+                  objectFit: 'cover',
+                  borderRadius: '8px',
+                }}
+              />
+            </div>
+            <div className="image-description">
+              <h3>Correção de Deformidades</h3>
+              <p>
+                Deformidades como joanetes (hallux valgus) podem causar desconforto e dor.
+                O podólogo trata essas condições e pode recomendar o uso de órteses para corrigir problemas posturais e deformidades.
+              </p>
+            </div>
+          </article>
+
+          <article className="image-block">
+            <div className="image-placeholder" role="img" aria-label="Imagem Ilustrativa Consultas e Agenda">
+              <img
+                src="../img/Atendimento domiciliar.jpg"
+                alt="imagem"
+                style={{
+                  width: '95%',
+                  height: '95%',
+                  objectFit: 'cover',
+                  borderRadius: '8px',
+                }}
+              />
+            </div>
+            <div className="image-description">
+              <h3>Atendimento Domiciliar</h3>
+              <p>
+                Para pacientes com mobilidade reduzida ou idosos, o atendimento domiciliar é uma opção valiosa.
+                O podólogo leva seus serviços até a residência do paciente, garantindo que todos recebam os cuidados necessários.
+              </p>
+            </div>
+          </article>
+        </section>
+      </main>
+
+      <footer>
+        <div className="footer-text">
+          <p>
+            Os serviços de podologia são essenciais para a manutenção da saúde dos pés e, consequentemente, para a melhoria da qualidade de vida. <br />
+            Ao procurar um podólogo, você garante que seus pés receberão o cuidado especializado de que necessitam, prevenindo problemas e tratando condições que podem afetar sua mobilidade e bem-estar. <br />
+            Não deixe de incluir a visita ao podólogo em sua rotina de cuidados com a saúde.
+          </p>
+        </div>
+        &copy; 2025 Podologia. Todos os direitos reservados.
+      </footer>
     </div>
   );
 };
- 
 
-export default Intro;
+export default PaginaInicial;

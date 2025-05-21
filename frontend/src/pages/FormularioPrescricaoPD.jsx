@@ -13,7 +13,7 @@ const FormularioPrescricaoPD = () => {
       { name: "Extrato de Aloe Vera", concentration: "5%" },
       { name: "Álcool Etílico", concentration: "70% qsp 30 ml - spray" }
     ],
-    usageInstructions: "de 2 a 3 vezes ao dia, borrifar nas áreas em tratamento e aguardar evaporação antes de calçar sapato fechado",
+    usageInstructions: "De 2 a 3 vezes ao dia, borrifar nas áreas em tratamento e aguardar evaporação antes de calçar sapato fechado.",
     location: "Mogi Mirim",
     date: "13 de setembro de 2024",
     contact: {
@@ -66,170 +66,142 @@ const FormularioPrescricaoPD = () => {
     }));
   };
 
+  const handleNameOnlyChange = (e) => {
+    const value = e.target.value;
+    setFormData(prev => ({
+      ...prev,
+      podiatristName: `Podóloga ${value}`
+    }));
+  };
+
   return (
-    <div className="prescription-form" style={{ maxWidth: '800px', margin: '0 auto', fontFamily: 'Arial, sans-serif' }}>
-      <h1 style={{ textAlign: 'center', marginBottom: '20px' }}>
+    <div className="prescription-form">
+      <div className="form-header">
         <input
           type="text"
           name="podiatristName"
           value={formData.podiatristName}
           onChange={handleInputChange}
-          style={{ width: '100%', fontSize: '24px', textAlign: 'center', border: '1px solid #ddd', padding: '5px' }}
+          className="input-large"
         />
-      </h1>
+      </div>
 
-      <div style={{ marginBottom: '20px' }}>
-        <p>Solicito ao farmacêutico responsável, a manipulação da seguinte indicação terapêutica para</p>
+      <div className="patient-section">
+        <p>Solicito ao farmacêutico responsável, a manipulação da seguinte indicação terapêutica para:</p>
         <input
           type="text"
           name="patientName"
           value={formData.patientName}
           onChange={handleInputChange}
-          style={{ width: '100%', border: '1px solid #ddd', padding: '5px' }}
+          className="input-medium"
         />
       </div>
 
-      <h2 style={{ marginBottom: '10px' }}>Para uso tópico</h2>
-      
-      <div style={{ marginBottom: '20px' }}>
+      <h2 className="section-title">Para uso tópico</h2>
+
+      <div className="ingredients-section">
         {formData.ingredients.map((ingredient, index) => (
-          <div key={index} style={{ display: 'flex', marginBottom: '10px', alignItems: 'center' }}>
-            <span style={{ marginRight: '10px' }}>•</span>
+          <div key={index} className="ingredient-row">
+            <span>•</span>
             <input
               type="text"
               value={ingredient.name}
               onChange={(e) => handleIngredientChange(index, 'name', e.target.value)}
-              style={{ flex: 2, marginRight: '10px', border: '1px solid #ddd', padding: '5px' }}
               placeholder="Nome do ingrediente"
+              className="input-small"
             />
             <input
               type="text"
               value={ingredient.concentration}
               onChange={(e) => handleIngredientChange(index, 'concentration', e.target.value)}
-              style={{ flex: 1, border: '1px solid #ddd', padding: '5px' }}
               placeholder="Concentração"
+              className="input-small"
             />
-            <button 
-              onClick={() => removeIngredient(index)}
-              style={{ marginLeft: '10px', background: '#ff4444', color: 'white', border: 'none', borderRadius: '4px', padding: '5px 10px', cursor: 'pointer' }}
-            >
-              Remover
-            </button>
+            <button type="button" onClick={() => removeIngredient(index)} className="remove-button">X</button>
           </div>
         ))}
-        <button 
-          onClick={addIngredient}
-          style={{ background: '#4CAF50', color: 'white', border: 'none', borderRadius: '4px', padding: '8px 15px', cursor: 'pointer', marginTop: '10px' }}
-        >
-          Adicionar Ingrediente
-        </button>
+        <button type="button" onClick={addIngredient} className="add-ingredient-button">Adicionar Ingrediente</button>
       </div>
 
-      <div style={{ marginBottom: '20px' }}>
-        <h3>Modo de usar:</h3>
+      <div className="usage-section">
+        <h3 className="section-title">Modo de usar:</h3>
         <textarea
           name="usageInstructions"
           value={formData.usageInstructions}
           onChange={handleInputChange}
-          style={{ width: '100%', height: '80px', border: '1px solid #ddd', padding: '5px' }}
+          className="textarea-large"
         />
       </div>
 
-      <hr style={{ margin: '20px 0' }} />
+      <div className="divider"></div>
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+      <div className="location-date-section">
         <input
           type="text"
           name="location"
           value={formData.location}
           onChange={handleInputChange}
-          style={{ width: '45%', border: '1px solid #ddd', padding: '5px' }}
+          className="input-medium"
         />
         <input
           type="text"
           name="date"
           value={formData.date}
           onChange={handleInputChange}
-          style={{ width: '45%', border: '1px solid #ddd', padding: '5px' }}
+          className="input-medium"
         />
       </div>
 
-      <hr style={{ margin: '20px 0' }} />
+      <div className="divider"></div>
 
-      <div style={{ textAlign: 'center' }}>
-        <h3>
+      <div className="contact-section">
+        <h3 className="section-title">
           <input
             type="text"
-            value={formData.podiatristName.split("Podóloga ")[1] || formData.podiatristName}
-            onChange={(e) => setFormData(prev => ({
-              ...prev,
-              podiatristName: `Podóloga ${e.target.value}`
-            }))}
-            style={{ width: '100%', textAlign: 'center', border: '1px solid #ddd', padding: '5px', fontWeight: 'bold' }}
+            value={formData.podiatristName.replace("Podóloga ", "")}
+            onChange={handleNameOnlyChange}
+            placeholder="Nome da Podóloga"
+            className="input-medium"
           />
         </h3>
-        
-        <div style={{ margin: '15px 0' }}>
-          <p>Contato:</p>
+
+        <div className="contact-info">
           <input
             type="text"
             value={formData.contact.phone}
             onChange={(e) => handleContactChange('phone', e.target.value)}
-            style={{ width: '100%', marginBottom: '5px', border: '1px solid #ddd', padding: '5px' }}
             placeholder="Telefone"
+            className="input-medium"
           />
           <input
             type="text"
             value={formData.contact.email}
             onChange={(e) => handleContactChange('email', e.target.value)}
-            style={{ width: '100%', marginBottom: '5px', border: '1px solid #ddd', padding: '5px' }}
             placeholder="Email"
+            className="input-medium"
           />
           <input
             type="text"
             value={formData.contact.instagram}
             onChange={(e) => handleContactChange('instagram', e.target.value)}
-            style={{ width: '100%', marginBottom: '5px', border: '1px solid #ddd', padding: '5px' }}
             placeholder="Instagram"
+            className="input-medium"
           />
           <input
             type="text"
             value={formData.contact.facebook}
             onChange={(e) => handleContactChange('facebook', e.target.value)}
-            style={{ width: '100%', border: '1px solid #ddd', padding: '5px' }}
             placeholder="Facebook"
+            className="input-medium"
           />
         </div>
       </div>
 
-      <div style={{ marginTop: '30px', textAlign: 'center' }}>
-        <button 
-          style={{ 
-            background: '#2196F3', 
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '4px', 
-            padding: '10px 20px', 
-            cursor: 'pointer',
-            fontSize: '16px',
-            marginRight: '10px'
-          }}
-          onClick={() => console.log('Form data:', formData)}
-        >
+      <div className="actions">
+        <button type="button" onClick={() => console.log('Form data:', formData)} className="action-button">
           Salvar Prescrição
         </button>
-        <button 
-          style={{ 
-            background: '#f44336', 
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '4px', 
-            padding: '10px 20px', 
-            cursor: 'pointer',
-            fontSize: '16px'
-          }}
-          onClick={() => window.print()}
-        >
+        <button type="button" onClick={() => window.print()} className="action-button">
           Imprimir Prescrição
         </button>
       </div>
