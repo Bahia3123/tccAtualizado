@@ -1,14 +1,20 @@
 import React from 'react';
 import '../componentes/css/Intro.css';
-
+import logo from '../assets/img/logo-curape.png';
+import img1 from '../assets/img/servicos-de-podologia-em-sorocaba.jpg.webp';
+import img2 from '../assets/img/unha-encravada-em-sorocaba-feethouse-710x375.jpg';
+import img3 from '../assets/img/Podoposturologia.jpg';
+import img4 from '../assets/img/deformidades.jpg';
+import img5 from '../assets/img/Atendimento domiciliar.jpg';
 
 const PaginaInicial = () => {
   return (
-    <div>
+    <div id='principal'>
+      <div className='Main-header-conteiner'>
       <header>
         <div className="header-left">
           <img
-            src="../img/logo-curape.png"
+            src={logo}
             alt=""
             style={{
               width: '65px',
@@ -22,7 +28,7 @@ const PaginaInicial = () => {
           </div>
           <div className="contact-info" aria-label="Informações de contato e redes sociais">
             <span>
-              Contato: <a href="tel:+5511999999999" aria-label="Telefone">(11) 94002-8922</a>
+           <a href="tel:+5511999999999" aria-label="Telefone">(11) 94002-8922</a>
             </span>
             <span> | </span>
             <a
@@ -50,14 +56,15 @@ const PaginaInicial = () => {
         </div>
         <nav className="login-container" aria-label="Área de Login">
           <h2>Login</h2>
-          <a href="  " className="login-btn" aria-describedby="desc-login-paciente">
+          <a href="/LoginPaciente" className="login-btn" aria-describedby="desc-login-paciente">
             Paciente
           </a>
-          <a href="  " className="login-btn" aria-describedby="desc-login-prestador">
+          <a href="/LoginPodologo" className="login-btn" aria-describedby="desc-login-prestador">
             Podólogo
           </a>
         </nav>
       </header>
+      </div>
 
       <main>
         <h1>Bem-vindo à CuraPé</h1>
@@ -70,7 +77,7 @@ const PaginaInicial = () => {
           <article className="image-block">
             <div className="image-placeholder" role="img" aria-label="Imagem Ilustrativa Cuidados Básicos">
               <img
-                src="../img/servicos-de-podologia-em-sorocaba.jpg.webp"
+                src={img1}
                 alt="imagem"
                 style={{
                   width: '95%',
@@ -91,7 +98,7 @@ const PaginaInicial = () => {
           <article className="image-block">
             <div className="image-placeholder" role="img" aria-label="Imagem Ilustrativa Tratamentos Personalizados">
               <img
-                src="../img/unha-encravada-em-sorocaba-feethouse-710x375.jpg"
+                src={img2}
                 alt="imagem"
                 style={{
                   width: '95%',
@@ -113,7 +120,7 @@ const PaginaInicial = () => {
           <article className="image-block">
             <div className="image-placeholder" role="img" aria-label="Imagem Ilustrativa Tratamentos Personalizados">
               <img
-                src="../img/Podoposturologia.jpg"
+                src={img3}
                 alt="imagem"
                 style={{
                   width: '95%',
@@ -136,7 +143,7 @@ const PaginaInicial = () => {
           <article className="image-block">
             <div className="image-placeholder" role="img" aria-label="Imagem Ilustrativa Consultas e Agenda">
               <img
-                src="../img/deformidades.jpg"
+                src={img4}
                 alt="imagem"
                 style={{
                   width: '95%',
@@ -158,7 +165,7 @@ const PaginaInicial = () => {
           <article className="image-block">
             <div className="image-placeholder" role="img" aria-label="Imagem Ilustrativa Consultas e Agenda">
               <img
-                src="../img/Atendimento domiciliar.jpg"
+                src={img5}
                 alt="imagem"
                 style={{
                   width: '95%',
