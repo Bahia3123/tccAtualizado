@@ -31,6 +31,7 @@ const PainelPodologo = () => {
 
   return (
     <>
+    <div id='principal-painel'>
       <motion.div initial="hidden" animate="visible" variants={containerVariants}>
         <header>
           <div className="container header-content">
@@ -136,6 +137,7 @@ const PainelPodologo = () => {
             </motion.div>
           </main>
         </div>
+      </div>
       </div>
     </>
   );
