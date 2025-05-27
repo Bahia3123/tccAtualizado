@@ -71,7 +71,7 @@ const handleSubmit = async (e) => {
           onChange={(e) => setDataNascimento(e.target.value)}
         />
 
-        <button type="submit">Cadastrar</button>
+        <button type="submit">Login</button>
         <button type="button" onClick={() => navigate('/')}>
           Alternar Acesso
         </button>
