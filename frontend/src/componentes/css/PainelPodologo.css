@@ -27,8 +27,7 @@
   }
   
   * {
-    margin: 0;
-    padding: 0;
+    
     box-sizing: border-box;
   }
 
@@ -49,15 +48,24 @@
     padding: var(--space-lg);
   }
   
-  header {
+  .header {
     background-color: var(--light);
-    box-shadow: var(--shadow-sm);
-    gap: 50%;
-    padding: var(--space-md) 0;
-    margin-bottom: var(--space-xl);
     border-radius: var(--radius-md);
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    margin-left: 100px;
+    margin-right: 100px;
+    height: 200px;
   }
-  
+  .container_header-content {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
   .logo {
     display: flex;
     align-items: center;

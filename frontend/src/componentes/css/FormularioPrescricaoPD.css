@@ -1,318 +1,326 @@
-/* FormularioPrescricaoPD.css */
 :root {
-    /* Color Palette */
-    --primary: #2e7d32;
-    --primary-light: #81c784;
-    --primary-lighter: #e8f5e9;
-    --secondary: #1565c0;
-    --secondary-light: #bbdefb;
-    --accent: #d32f2f;
-    --accent-light: #ffcdd2;
-    --light: #ffffff;
-    --light-gray: #f5f5f5;
-    --medium-gray: #e0e0e0;
-    --dark-gray: #424242;
-    --text-primary: #212121;
-    --text-secondary: #757575;
-    
-    /* Typography */
-    --font-main: 'Roboto', sans-serif;
-    --font-heading: 'Montserrat', sans-serif;
-    
-    /* Spacing */
-    --space-xs: 0.5rem;
-    --space-sm: 1rem;
-    --space-md: 1.5rem;
-    --space-lg: 2rem;
-    --space-xl: 3rem;
-    
-    /* Borders */
-    --border-radius-sm: 4px;
-    --border-radius-md: 8px;
-    --border-radius-lg: 12px;
-    
-    /* Shadows */
-    --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
-    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
-    --shadow-lg: 0 10px 20px rgba(0,0,0,0.1);
-    
-    /* Transitions */
-    --transition-fast: 0.15s ease;
-    --transition-normal: 0.3s ease;
-  }
-  
-  /* Base Styles */
-  .prescription-form {
-    max-width: 800px;
-    margin: var(--space-xl) auto;
-    padding: var(--space-lg);
-    font-family: var(--font-main);
-    color: var(--text-primary);
-    background-color: var(--light);
-    border-radius: var(--border-radius-lg);
-    box-shadow: var(--shadow-lg);
-    border: 1px solid var(--medium-gray);
-  }
-  
+  /* Color Palette */
+  --primary: #ade6bb;
+  --primary-light: #c7e9cd;
+  --primary-lighter: #e7f5ec;
+  --secondary: #ade6bb;
+  --secondary-light: #bbdefb;
+  --accent: #d32f2f;
+  --accent-light: #ffcdd2;
+  --light: #ffffff;
+  --light-gray: #f5f5f5;
+  --medium-gray: #e0e0e0;
+  --dark-gray: #424242;
+  --text-primary: #212121;
+  --text-secondary: #757575;
+
   /* Typography */
-  .prescription-form h1,
-  .prescription-form h2,
-  .prescription-form h3 {
-    font-family: var(--font-heading);
-    font-weight: 600;
-    color: var(--primary);
-    margin-bottom: var(--space-md);
-  }
+  --font-main: 'Roboto', sans-serif;
+  --font-heading: 'Montserrat', sans-serif;
   
-  .prescription-form h1 {
-    font-size: 1.8rem;
-    text-align: center;
-    position: relative;
-    padding-bottom: var(--space-sm);
-  }
+  /* Spacing */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.5rem;
+  --space-lg: 2rem;
+  --space-xl: 3rem;
   
-  .prescription-form h1::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 80px;
-    height: 3px;
-    background-color: var(--primary-light);
-  }
+  /* Borders */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  --border-radius-lg: 12px;
   
-  .prescription-form h2 {
-    font-size: 1.4rem;
-    border-bottom: 1px solid var(--medium-gray);
-    padding-bottom: var(--space-xs);
-  }
+  /* Shadows */
+  --shadow-sm: 0 1px 3px rgba(66, 130, 82, 0.12);
+  --shadow-md: 0 4px 6px rgba(66, 130, 82, 0.15);
+  --shadow-lg: 0 10px 20px rgba(66, 130, 82, 0.15);
   
-  .prescription-form h3 {
-    font-size: 1.2rem;
-    color: var(--text-primary);
-  }
-  
-  .prescription-form p {
-    color: var(--text-secondary);
-    margin-bottom: var(--space-sm);
-    line-height: 1.5;
-  }
-  
-  /* Form Elements */
-  .prescription-form input[type="text"],
-  .prescription-form textarea {
-    width: 100%;
-    padding: var(--space-sm);
-    border: 1px solid var(--medium-gray);
-    border-radius: var(--border-radius-sm);
-    font-family: var(--font-main);
-    font-size: 1rem;
-    transition: var(--transition-fast);
-    background-color: var(--light-gray);
-  }
-  
-  .prescription-form input[type="text"]:focus,
-  .prescription-form textarea:focus {
-    outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 2px var(--primary-lighter);
-    background-color: var(--light);
-  }
-  
-  .prescription-form textarea {
-    min-height: 100px;
-    resize: vertical;
-  }
-  
-  /* Header Input */
-  .prescription-form .header-input {
-    font-size: 1.8rem;
-    text-align: center;
-    padding: var(--space-sm) var(--space-md);
-    border-radius: var(--border-radius-md);
-    background-color: var(--light-gray);
-    border: 1px solid var(--medium-gray);
-    font-family: var(--font-heading);
-    color: var(--primary);
-  }
-  
-  /* Sections */
-  .form-section {
-    margin-bottom: var(--space-lg);
-    padding: var(--space-md);
-    background-color: var(--light-gray);
-    border-radius: var(--border-radius-md);
-    border: 1px solid var(--medium-gray);
-  }
-  
-  /* Ingredient Rows */
-  .ingredient-row {
-    display: flex;
-    gap: var(--space-sm);
-    margin-bottom: var(--space-sm);
-    align-items: center;
-  }
-  
-  .ingredient-bullet {
-    color: var(--primary);
-    font-weight: bold;
-  }
-  
-  .ingredient-name-input {
-    flex: 2;
-  }
-  
-  .ingredient-concentration-input {
-    flex: 1;
-    min-width: 100px;
-  }
-  
-  /* Buttons */
-  .btn {
-    padding: var(--space-xs) var(--space-sm);
-    border: none;
-    border-radius: var(--border-radius-sm);
-    font-family: var(--font-main);
-    font-weight: 500;
-    cursor: pointer;
-    transition: var(--transition-normal);
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-xs);
-  }
-  
-  .btn:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
-  }
-  
-  .btn:active {
-    transform: translateY(0);
-  }
-  
-  .btn-remove {
-    background-color: var(--accent);
-    color: white;
-  }
-  
-  .btn-remove:hover {
-    background-color: var(--accent-light);
-    color: var(--accent);
-  }
-  
-  .btn-add {
-    background-color: var(--primary);
-    color: white;
-    margin-top: var(--space-sm);
-    padding: var(--space-sm) var(--space-md);
-  }
-  
-  .btn-add:hover {
-    background-color: var(--primary-light);
-  }
-  
-  .btn-add::before {
-    content: '+';
-    font-size: 1.2rem;
-  }
-  
-  .btn-primary {
-    background-color: var(--secondary);
-    color: white;
-    padding: var(--space-sm) var(--space-lg);
-    font-size: 1rem;
-  }
-  
-  .btn-primary:hover {
-    background-color: var(--secondary-light);
-    color: var(--secondary);
-  }
-  
-  .btn-secondary {
-    background-color: var(--accent);
-    color: white;
-    padding: var(--space-sm) var(--space-lg);
-    font-size: 1rem;
-  }
-  
-  .btn-secondary:hover {
-    background-color: var(--accent-light);
-    color: var(--accent);
-  }
-  
-  /* Divider */
-  .divider {
-    border: none;
-    border-top: 1px solid var(--medium-gray);
-    margin: var(--space-lg) 0;
-  }
-  
-  /* Location/Date Row */
-  .location-date-row {
-    display: flex;
-    gap: var(--space-md);
-    margin-bottom: var(--space-md);
-  }
-  
-  /* Footer */
-  .prescription-footer {
-    text-align: center;
-    padding: var(--space-md);
-    background-color: var(--light-gray);
-    border-radius: var(--border-radius-md);
-    border: 1px solid var(--medium-gray);
-  }
-  
-  .footer-input {
-    font-weight: 600;
-    font-size: 1.1rem;
-    margin-bottom: var(--space-md);
-  }
-  
-  .contact-section {
-    margin: var(--space-md) 0;
-  }
-  
-  .contact-label {
-    color: var(--text-secondary);
-    margin-bottom: var(--space-sm);
-  }
-  
-  /* Action Buttons */
-  .action-buttons {
-    display: flex;
-    justify-content: center;
-    gap: var(--space-md);
-    margin-top: var(--space-xl);
-  }
-  
-  /* Responsive Design */
-  @media (max-width: 768px) {
-    .prescription-form {
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+}
+
+/* Base Styles */
+.prescription-form {
+  max-width: 800px;
+  margin: var(--space-xl) auto;
+  padding: var(--space-lg);
+  font-family: var(--font-main);
+  color: var(--text-primary);
+  background-color: var(--light);
+  border-radius: var(--border-radius-lg);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--medium-gray);
+}
+
+.actions{
+  display: flex;
+  justify-content: center;
+  gap: 1rem; /* espaçamento fixo entre os botões */
+  margin-top: var(--space-xl, 3rem);
+
+}
+
+/* Typography */
+.prescription-form h1,
+.prescription-form h2,
+.prescription-form h3 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: var(--space-md);
+}
+
+.prescription-form h1 {
+  font-size: 1.8rem;
+  text-align: center;
+  position: relative;
+  padding-bottom: var(--space-sm);
+}
+
+.prescription-form h1::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background-color: var(--primary-light);
+}
+
+.prescription-form h2 {
+  font-size: 1.4rem;
+  border-bottom: 1px solid var(--medium-gray);
+  padding-bottom: var(--space-xs);
+}
+
+.prescription-form h3 {
+  font-size: 1.2rem;
+  color: var(--text-primary);
+}
+
+.prescription-form p {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+  line-height: 1.5;
+}
+
+/* Form Elements */
+.prescription-form input[type="text"],
+.prescription-form textarea {
+  width: 100%;
+  padding: var(--space-sm);
+  border: 1px solid var(--medium-gray);
+  border-radius: var(--border-radius-sm);
+  font-family: var(--font-main);
+  font-size: 1rem;
+  transition: var(--transition-fast);
+  background-color: var(--light-gray);
+}
+
+.prescription-form input[type="text"]:focus,
+.prescription-form textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-lighter);
+  background-color: var(--light);
+}
+
+.prescription-form textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Header Input */
+.prescription-form .header-input {
+  font-size: 1.8rem;
+  text-align: center;
+  padding: var(--space-sm) var(--space-md);
+  border-radius: var(--border-radius-md);
+  background-color: var(--light-gray);
+  border: 1px solid var(--medium-gray);
+  font-family: var(--font-heading);
+  color: var(--primary);
+}
+
+/* Sections */
+.form-section {
+  margin-bottom: var(--space-lg);
+  padding: var(--space-md);
+  background-color: var(--light-gray);
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--medium-gray);
+}
+
+/* Ingredient Rows */
+.ingredient-row {
+  display: flex;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-sm);
+  align-items: center;
+}
+
+.ingredient-bullet {
+  color: var(--primary);
+  font-weight: bold;
+}
+
+.ingredient-name-input {
+  flex: 2;
+}
+
+.ingredient-concentration-input {
+  flex: 1;
+  min-width: 100px;
+}
+
+/* Buttons */
+.btn {
+  padding: var(--space-xs) var(--space-sm);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  font-family: var(--font-main);
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition-normal);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-remove {
+  background-color: var(--accent);
+  color: white;
+}
+
+.btn-remove:hover {
+  background-color: var(--accent-light);
+  color: var(--accent);
+}
+
+.btn-add {
+  background-color: var(--primary);
+  color: white;
+  margin-top: var(--space-sm);
+  padding: var(--space-sm) var(--space-md);
+}
+
+.btn-add:hover {
+  background-color: var(--primary-light);
+}
+
+.btn-add::before {
+  content: '+';
+  font-size: 1.2rem;
+}
+
+.btn-primary {
+  background-color: var(--secondary);
+  color: white;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: 1rem;
+}
+
+.btn-primary:hover {
+  background-color: var(--secondary-light);
+  color: var(--secondary);
+}
+
+.btn-secondary {
+  background-color: var(--accent);
+  color: white;
+  padding: var(--space-sm) var(--space-lg);
+  font-size: 1rem;
+}
+
+.btn-secondary:hover {
+  background-color: var(--accent-light);
+  color: var(--accent);
+}
+
+/* Divider */
+.divider {
+  border: none;
+  border-top: 1px solid var(--medium-gray);
+  margin: var(--space-lg) 0;
+}
+
+/* Location/Date Row */
+.location-date-row {
+  display: flex;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+/* Footer */
+.prescription-footer {
+  text-align: center;
+  padding: var(--space-md);
+  background-color: var(--light-gray);
+  border-radius: var(--border-radius-md);
+  border: 1px solid var(--medium-gray);
+}
+
+.footer-input {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: var(--space-md);
+}
+
+.contact-section {
+  margin: var(--space-md) 0;
+}
+
+.contact-label {
+  color: var(--text-secondary);
+  margin-bottom: var(--space-sm);
+}
+
+/* Action Buttons */
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-md);
+  margin-top: var(--space-xl);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .prescription-form {
       padding: var(--space-md);
       margin: var(--space-md);
-    }
-    
-    .location-date-row {
-      flex-direction: column;
-    }
-    
-    .ingredient-row {
-      flex-wrap: wrap;
-    }
-    
-    .ingredient-name-input,
-    .ingredient-concentration-input {
-      flex: 1 1 100%;
-    }
-    
-    .action-buttons {
-      flex-direction: column;
-    }
-    
-    .btn {
-      width: 100%;
-    }
   }
+  
+  .location-date-row {
+      flex-direction: column;
+  }
+  
+  .ingredient-row {
+      flex-wrap: wrap;
+  }
+  
+  .ingredient-name-input,
+  .ingredient-concentration-input {
+      flex: 1 1 100%;
+  }
+  
+  .action-buttons {
+      flex-direction: column;
+  }
+  
+  .btn {
+      width: 100%;
+  }
+}
+

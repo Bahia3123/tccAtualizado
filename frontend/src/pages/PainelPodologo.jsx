@@ -33,8 +33,8 @@ const PainelPodologo = () => {
     <>
     <div id='principal-painel'>
       <motion.div initial="hidden" animate="visible" variants={containerVariants}>
-        <header>
-          <div className="container header-content">
+        <header className="header">
+          <div className="container_header-content">
             <div className="logo">
               <img src={logo} alt="logo" />
               <h1>CuraPé</h1>
@@ -64,9 +64,7 @@ const PainelPodologo = () => {
                 to="/PainelPodologo"
                 className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
               >
-                <svg className="icon" viewBox="0 0 20 20">
-                  <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
-                </svg>
+                   <span className="icon">🏠</span>
                 <span>Home</span>
               </NavLink>
 
@@ -74,16 +72,12 @@ const PainelPodologo = () => {
                 to="/HistoricoPodologo"
                 className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
               >
-                <svg className="icon" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V7.414A2 2 0 0015.414 6L12 2.586A2 2 0 0010.586 2H6zm2 10a1 1 0 10-2 0v3a1 1 0 102 0v-3zm2-3a1 1 0 011 1v5a1 1 0 11-2 0v-5a1 1 0 011-1zm4-1a1 1 0 10-2 0v7a1 1 0 102 0V8z" clipRule="evenodd" />
-                </svg>
+                <span className="icon">📁</span>
                 <span>Histórico</span>
               </NavLink>
 
               <div className="nav-item">
-                <svg className="icon" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
-                </svg>
+              <span className="icon">👥</span>
                 <span>Pacientes</span>
               </div>
             </nav>
