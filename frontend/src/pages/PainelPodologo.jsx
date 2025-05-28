@@ -33,27 +33,24 @@ const PainelPodologo = () => {
     <>
     <div id='principal-painel'>
       <motion.div initial="hidden" animate="visible" variants={containerVariants}>
-        <header className="header">
-          <div className="container_header-content">
-            <div className="logo">
-              <img src={logo} alt="logo" />
-              <h1>CuraPé</h1>
-            </div>
-            <div className="user-menu">
-              <div className="user-info">
-                <div className="user-name">
-                  {user?.nome ? `Dr(a). ${user.nome}` : "Usuário"}
+         <motion.header initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
+                
+                <div className="container_header-content">
+                  <div className="logo">
+                    <img src={logo} alt="logo" />
+                    <h1>CuraPé</h1>
+                  </div>
+                  <div className="user-menu">
+                    <div className="user-info">
+                      <div className="user-name">{user?.nome ? `Dr(a). ${user.nome}` : "Usuário"}</div>
+                      <div className="user-role">Podólogo</div>
+                    </div>
+                    <div className="user-avatar">
+                      {user?.nome ? user.nome.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2) : "??"}
+                    </div>
+                  </div>
                 </div>
-                <div className="user-role">Podólogo</div>
-              </div>
-              <div className="user-avatar">
-                {user?.nome
-                  ? user.nome.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
-                  : "??"}
-              </div>
-            </div>
-          </div>
-        </header>
+              </motion.header>
       </motion.div>
 
       <div className="container">

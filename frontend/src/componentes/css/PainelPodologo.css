@@ -31,15 +31,21 @@
     box-sizing: border-box;
   }
 
-  #principal-painel{
+  .principal-painel{
     width: 100vw;
+    padding: 0px;
+    
   }
   
   body {
-    font-family: 'Segoe UI', system-ui, sans-serif;
-    background-color: var(--gray-light);
-    color: var(--gray);
-    line-height: 1.7;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 50px;
+    color: #333;
+    line-height: 1.6;
   }
   
   .container {
@@ -54,18 +60,14 @@
     width: 80%;
     display: flex;
     justify-content: center;
-    margin-left: 100px;
-    margin-right: 100px;
-    height: 200px;
   }
-  .container_header-content {
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
+
+  .container_header-content{
+    gap: 600px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    align-content: center;
   }
+  
   .logo {
     display: flex;
     align-items: center;
