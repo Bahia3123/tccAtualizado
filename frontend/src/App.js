@@ -17,6 +17,8 @@ import LoginPaciente from './pages/LoginPaciente';
 import Formulario from './pages/Formulario';
 import AcessoPaciente from './pages/AcessoPaciente';
 import Agendamento from './pages/Agendamento';
+import PacienteList from './pages/PacienteList';
+
 
 function App() {
   return (
@@ -25,6 +27,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<Intro />} />
+            <Route path="/PacienteList" element={<PacienteList/>}/>
             <Route path="/AcessoPaciente" element={<AcessoPaciente/>}/>
             <Route path="/Agendamento" element={<Agendamento/>}/>
             <Route path="/CadastroPodologo" element={<CadastroPodologo />} />

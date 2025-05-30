@@ -122,6 +122,10 @@ const LoginPodologo = () => {
         <button type="submit" disabled={loading}>
           {loading ? 'Carregando...' : 'Entrar'}
         </button>
+
+        <button type="button" onClick={() => navigate('/')}>
+          Alternar Acesso
+        </button>
       </form>
     </div>
   );

@@ -103,6 +103,7 @@ html, body {
   font-size: 1.4rem;
   border-bottom: 1px solid var(--medium-gray);
   padding-bottom: var(--space-xs);
+  color: #212121;
 }
 
 .prescription-form h3 {

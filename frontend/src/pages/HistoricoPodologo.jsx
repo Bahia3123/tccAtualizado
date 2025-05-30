@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useUser } from "../context/userContext";  // Usando useUser para acessar o contexto
 import { useHistory } from "../context/historyContext";  // Mantendo o HistoryContext para o restante
-import { Link, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { NavLink } from 'react-router-dom';
 import { motion, AnimatePresence } from "framer-motion";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -166,18 +167,37 @@ export default function HistoricoPodologo() {
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
           <nav>
-            <Link to="/PainelPodologo" className={`nav-item ${isActive('/PainelPodologo') ? 'active' : ''}`}>
-              <span className="icon">🏠</span>
-              <span>Home</span>
-            </Link>
-            <Link to="/HistoricoPodologo" className={`nav-item ${isActive('/HistoricoPodologo') ? 'active' : ''}`}>
-              <span className="icon">📁</span>
-              <span>Histórico</span>
-            </Link>
-            <Link to="/paciente" className={`nav-item ${isActive('/paciente') ? 'active' : ''}`}>
-              <span className="icon">👥</span>
-              <span>Pacientes</span>
-            </Link>
+             <NavLink
+                to="/PainelPodologo"
+                className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+              >
+                   <span className="icon">🏠</span>
+                <span>Home</span>
+              </NavLink>
+
+              <NavLink
+                to="/HistoricoPodologo"
+                className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+              >
+                <span className="icon">📁</span>
+                <span>Histórico</span>
+              </NavLink>
+
+              <NavLink
+                to="/PacienteList"
+                className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+              >
+                <span className="icon">👥</span>
+                <span>Pacientes</span>
+              </NavLink>
+
+              <NavLink
+                to="/FormularioPrescricaoPD"
+                className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+              >
+                <span className="icon">📄</span>
+                <span>Prescrição</span>
+              </NavLink>
           </nav>
         </motion.aside>
 
