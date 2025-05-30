@@ -201,9 +201,7 @@ const FormularioPrescricaoPD = () => {
         <button type="button" onClick={() => console.log('Form data:', formData)} className="action-button">
           Salvar Prescrição
         </button>
-        <button type="button" onClick={() => window.print()} className="action-button">
-          Imprimir Prescrição
-        </button>
+        
       </div>
     </div>
   );

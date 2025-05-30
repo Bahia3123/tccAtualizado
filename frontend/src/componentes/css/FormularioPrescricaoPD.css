@@ -40,9 +40,19 @@
   --transition-normal: 0.3s ease;
 }
 
+/* Remove page scroll */
+html, body {
+  overflow: hidden; /* Remove scroll from the entire page */
+  height: 100%; /* Ensure full height */
+  margin: 0; /* Remove default margin */
+  padding: 0; /* Remove default padding */
+}
+
 /* Base Styles */
 .prescription-form {
-  max-width: 800px;
+  width: 900px;
+  height: 90vh; /* Limita a altura do formulário */
+  overflow-y: auto; /* Permite rolagem interna */
   margin: var(--space-xl) auto;
   padding: var(--space-lg);
   font-family: var(--font-main);
@@ -53,12 +63,12 @@
   border: 1px solid var(--medium-gray);
 }
 
-.actions{
+/* Actions */
+.actions {
   display: flex;
   justify-content: center;
   gap: 1rem; /* espaçamento fixo entre os botões */
   margin-top: var(--space-xl, 3rem);
-
 }
 
 /* Typography */
@@ -323,4 +333,3 @@
       width: 100%;
   }
 }
-

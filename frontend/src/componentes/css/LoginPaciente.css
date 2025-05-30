@@ -84,7 +84,7 @@ input {
 
 input:focus {
     outline: none;
-    border-color: #3498db;
+    border-color: #2bb342;
     box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
     background-color: #fff;
 }
@@ -96,7 +96,7 @@ input::placeholder {
 
 /* Botão de Envio */
 button[type="submit"] {
-    background-color: #3498db;
+    background-color: #2bb342;
     color: white;
     border: none;
     padding: 14px;
@@ -123,7 +123,7 @@ button[type="submit"]:active {
 a {
     display: block;
     text-align: center;
-    color: #3498db;
+    color: #2bb342;
     text-decoration: none;
     font-size: 14px;
     transition: all 0.3s ease;
@@ -132,7 +132,7 @@ a {
 }
 
 a:hover {
-    color: #2980b9;
+    color: #2bb342;
     background-color: rgba(52, 152, 219, 0.1);
 }
 

@@ -10,6 +10,8 @@
   transition: all 0.3s ease;
 }
 
+
+
 /* Cabeçalho do card */
 .patient-details-card .card-header {
   display: flex;
@@ -30,7 +32,7 @@
 
 /* Botão expandir/recolher */
 .patient-details-card .expand-btn {
-  background: #0077ff;
+  background: #2bb342;
   color: #fff;
   border: none;
   padding: 8px 18px;
@@ -41,7 +43,7 @@
 }
 
 .patient-details-card .expand-btn:hover {
-  background: #005fcc;
+  background: #2bb342;
 }
 
 /* Grade de informações compactas */
