@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useUser } from "../context/userContext";  // Usando useUser para acessar o contexto
 import { useHistory } from "../context/historyContext";  // Mantendo o HistoryContext para o restante
-import { useLocation } from "react-router-dom";
 import { NavLink } from 'react-router-dom';
 import { motion, AnimatePresence } from "framer-motion";
 import jsPDF from 'jspdf';
@@ -16,7 +15,6 @@ export default function HistoricoPodologo() {
   const [sortOrder, setSortOrder] = useState("asc");
   const [filterStatus, setFilterStatus] = useState("todos");
   const [showSuccess, setShowSuccess] = useState("");
-  const location = useLocation();
   const { historico, inativarPaciente, excluirPaciente } = useHistory();
   const {user} = useUser();
 
@@ -36,7 +34,6 @@ export default function HistoricoPodologo() {
     setExpandedPatient(prev => prev === cpf ? null : cpf);
   };
 
-  const isActive = (path) => location.pathname === path;
 
   const handleInativarPaciente = (cpf) => {
     if (window.confirm('Tem certeza que deseja marcar este paciente como inativo?')) {
@@ -138,8 +135,8 @@ export default function HistoricoPodologo() {
   };
 
   return (
-  
-    <motion.div className="historico-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+     <div id="historico-principal">
+    <div className="historico-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
       <motion.header initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
         
         <div className="header-content">
@@ -327,6 +324,7 @@ export default function HistoricoPodologo() {
           </div>
         </motion.main>
       </div>
-    </motion.div>
+    </div>
+    </div>
   );
 }

@@ -64,7 +64,7 @@
   }
 
   .container_header-content{
-    gap: 600px;
+    gap: 1000px;
     display: flex;
     align-content: center;
   }
@@ -161,7 +161,7 @@
   }
   
   .welcome-banner {
-    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    background: linear-gradient(135deg, #8fd9a2, #156d12);
     color: var(--light);
     padding: var(--space-xl);
     border-radius: var(--radius-lg);

@@ -6,14 +6,9 @@ const FormularioPrescricaoPD = () => {
     podiatristName: "Podóloga Cristiane Barbosa",
     patientName: "Davi Ricardo dos Santos Xavier",
     ingredients: [
-      { name: "Hexatrate", concentration: "5%" },
-      { name: "Cloridrato de alumínio", concentration: "10%" },
-      { name: "Extrato de Própolis", concentration: "10%" },
-      { name: "Extrato Glicólico de Manuka", concentration: "5%" },
-      { name: "Extrato de Aloe Vera", concentration: "5%" },
-      { name: "Álcool Etílico", concentration: "70% qsp 30 ml - spray" }
+     
     ],
-    usageInstructions: "De 2 a 3 vezes ao dia, borrifar nas áreas em tratamento e aguardar evaporação antes de calçar sapato fechado.",
+    usageInstructions: "",
     location: "Mogi Mirim",
     date: "13 de setembro de 2024",
     contact: {

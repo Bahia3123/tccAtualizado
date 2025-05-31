@@ -32,10 +32,10 @@ body {
 header {
   background-color: white;
   height: 200px;
-  width: 100%;
+  width: 98vw;
   display: flex;
   justify-content: center ;
-  gap: 38%;
+  gap:600px;
   padding: auto;
   align-items: center;
   flex-wrap: nowrap;
