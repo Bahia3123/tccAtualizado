@@ -10,9 +10,9 @@
   transition: all 0.3s ease;
 }
 
-#historico-principal{
-  width: 100%;
-  height: 60%;
+.historico-container{
+  width: 100vw;
+  height: auto;
 }
 
 

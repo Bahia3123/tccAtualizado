@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../componentes/css/Intro.css';
 import logo from '../assets/img/logo-curape.png';
 import img1 from '../assets/img/servicos-de-podologia-em-sorocaba.jpg.webp';
@@ -6,64 +6,79 @@ import img2 from '../assets/img/unha-encravada-em-sorocaba-feethouse-710x375.jpg
 import img3 from '../assets/img/Podoposturologia.jpg';
 import img4 from '../assets/img/deformidades.jpg';
 import img5 from '../assets/img/Atendimento domiciliar.jpg';
+import Paciente from './LoginPaciente'; // ajuste o caminho se necessário
+import Podologo from './LoginPodologo'
+
+
 
 const PaginaInicial = () => {
+  const [showPacienteModal, setShowPacienteModal] = useState(false);
+  const [showPodologoModal, setShowPodologoModal] = useState(false);
+
   return (
     <div id='principal'>
       <div className='Main-header-conteiner'>
-      <header>
-        <div className="header-left">
-          <img
-            src={logo}
-            alt=""
-            style={{
-              width: '65px',
-              height: '65px',
-              objectFit: 'cover',
-              borderRadius: '30px',
-            }}
-          />
-          <div className="logo" aria-label="Logo do site de Podologia">
-            CuraPé
+        <header>
+          <div className="header-left">
+            <img
+              src={logo}
+              alt=""
+              style={{
+                width: '65px',
+                height: '65px',
+                objectFit: 'cover',
+                borderRadius: '30px',
+              }}
+            />
+            <div className="logo" aria-label="Logo do site de Podologia">
+              CuraPé
+            </div>
+            <div className="contact-info" aria-label="Informações de contato e redes sociais">
+              <span>
+                <a href="tel:+5511999999999" aria-label="Telefone">(11) 94002-8922</a>
+              </span>
+              <span> | </span>
+              <a
+                href="https://www.facebook.com/podologia"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+              >
+                Facebook
+              </a>
+              <span> | </span>
+              <a
+                href="https://www.instagram.com/podologia"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+              >
+                Instagram
+              </a>
+              <span> | </span>
+              <a href="mailto:contato@podologia.com" aria-label="Enviar email">
+                Fale Conosco
+              </a>
+            </div>
           </div>
-          <div className="contact-info" aria-label="Informações de contato e redes sociais">
-            <span>
-           <a href="tel:+5511999999999" aria-label="Telefone">(11) 94002-8922</a>
-            </span>
-            <span> | </span>
+          <nav className="login-container" aria-label="Área de Login">
+            <h2>Login</h2>
             <a
-              href="https://www.facebook.com/podologia"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
+              onClick={() => setShowPacienteModal(true)}
+              className="login-btn"
+              style={{ cursor: 'pointer' }}
             >
-              Facebook
+              Paciente
             </a>
-            <span> | </span>
             <a
-              href="https://www.instagram.com/podologia"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
+              onClick={() => setShowPodologoModal(true)}
+              className="login-btn"
+              style={{ cursor: 'pointer' }}
             >
-              Instagram
+              Podólogo
             </a>
-            <span> | </span>
-            <a href="mailto:contato@podologia.com" aria-label="Enviar email">
-              Fale Conosco
-            </a>
-          </div>
-        </div>
-        <nav className="login-container" aria-label="Área de Login">
-          <h2>Login</h2>
-          <a href="/LoginPaciente" className="login-btn" aria-describedby="desc-login-paciente">
-            Paciente
-          </a>
-          <a href="/LoginPodologo" className="login-btn" aria-describedby="desc-login-prestador">
-            Podólogo
-          </a>
-        </nav>
-      </header>
+          </nav>
+        </header>
       </div>
 
       <main>
@@ -196,6 +211,26 @@ const PaginaInicial = () => {
         </div>
         &copy; 2025 Podologia. Todos os direitos reservados.
       </footer>
+
+      {/* Modal Paciente */}
+      {showPacienteModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button onClick={() => setShowPacienteModal(false)} className="close-btn">X</button>
+            <Paciente />
+          </div>
+        </div>
+      )}
+
+      {/* Modal Podólogo - Substitua pelo componente real depois */}
+      {showPodologoModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <button onClick={() => setShowPodologoModal(false)} className="close-btn">X</button>
+            <Podologo/>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

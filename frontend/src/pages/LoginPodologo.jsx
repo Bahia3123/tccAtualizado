@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/userContext';
 import '../componentes/css/LoginPodologo.css';
 
-const LoginPodologo = () => {
+const Podologo = () => {
   const [form, setForm] = useState({
     email: '',
     ncc: ''
@@ -131,4 +131,4 @@ const LoginPodologo = () => {
   );
 };
 
-export default LoginPodologo;
+export default Podologo;
