@@ -6,13 +6,11 @@ import img2 from '../assets/img/unha-encravada-em-sorocaba-feethouse-710x375.jpg
 import img3 from '../assets/img/Podoposturologia.jpg';
 import img4 from '../assets/img/deformidades.jpg';
 import img5 from '../assets/img/Atendimento domiciliar.jpg';
-import Paciente from './LoginPaciente'; // ajuste o caminho se necessário
 import Podologo from './LoginPodologo'
 
 
 
 const PaginaInicial = () => {
-  const [showPacienteModal, setShowPacienteModal] = useState(false);
   const [showPodologoModal, setShowPodologoModal] = useState(false);
 
   return (
@@ -63,13 +61,7 @@ const PaginaInicial = () => {
           </div>
           <nav className="login-container" aria-label="Área de Login">
             <h2>Login</h2>
-            <a
-              onClick={() => setShowPacienteModal(true)}
-              className="login-btn"
-              style={{ cursor: 'pointer' }}
-            >
-              Paciente
-            </a>
+           
             <a
               onClick={() => setShowPodologoModal(true)}
               className="login-btn"
@@ -213,14 +205,7 @@ const PaginaInicial = () => {
       </footer>
 
       {/* Modal Paciente */}
-      {showPacienteModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <button onClick={() => setShowPacienteModal(false)} className="close-btn">X</button>
-            <Paciente />
-          </div>
-        </div>
-      )}
+    
 
       {/* Modal Podólogo - Substitua pelo componente real depois */}
       {showPodologoModal && (

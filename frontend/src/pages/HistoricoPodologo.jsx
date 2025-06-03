@@ -243,14 +243,13 @@ export default function HistoricoPodologo() {
           </div>
 
           <div className="history-tabs">
-            {["patients", "consultations", "prescriptions"].map((tab) => (
+            {["patients", "prescriptions"].map((tab) => (
               <div
                 key={tab}
                 className={`tab ${activeTab === tab ? "active" : ""}`}
                 onClick={() => handleTabClick(tab)}
               >
                 {tab === "patients" && "Pacientes"}
-                {tab === "consultations" && "Atendimentos"}
                 {tab === "prescriptions" && "Prescrições"}
               </div>
             ))}

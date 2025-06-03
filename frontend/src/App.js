@@ -13,10 +13,7 @@ import LoginPodologo from './pages/LoginPodologo';
 import PainelPodologo from './pages/PainelPodologo';
 import HistoricoPodologo from './pages/HistoricoPodologo';
 import FormularioPrescricaoPD from './pages/FormularioPrescricaoPD';
-import LoginPaciente from './pages/LoginPaciente';
 import Formulario from './pages/Formulario';
-import AcessoPaciente from './pages/AcessoPaciente';
-import Agendamento from './pages/Agendamento';
 import PacienteList from './pages/PacienteList';
 
 
@@ -28,14 +25,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Intro />} />
             <Route path="/PacienteList" element={<PacienteList/>}/>
-            <Route path="/AcessoPaciente" element={<AcessoPaciente/>}/>
-            <Route path="/Agendamento" element={<Agendamento/>}/>
             <Route path="/CadastroPodologo" element={<CadastroPodologo />} />
             <Route path="/LoginPodologo" element={<LoginPodologo />} />
             <Route path="/PainelPodologo" element={<PainelPodologo />} />
             <Route path="/HistoricoPodologo" element={<HistoricoPodologo />} />
             <Route path="/FormularioPrescricaoPD" element={<FormularioPrescricaoPD />} />
-            <Route path="/LoginPaciente" element={<LoginPaciente />} />
             <Route path="/Formulario" element={<Formulario />} />
             <Route path="*" element={<Intro />} /> {/* Rota fallback */}
           </Routes>
