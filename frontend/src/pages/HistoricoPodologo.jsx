@@ -137,13 +137,26 @@ export default function HistoricoPodologo() {
   return (
      <div id="historico-principal">
     <div className="historico-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-      <motion.header initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
+      <header className="header-Historico" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
         
         <div className="header-content">
-          <div className="logo">
-            <img src={logo} alt="logo" />
-            <h1>CuraPé</h1>
-          </div>
+          <div className="header-left">
+                      <img
+                        src={logo}
+                        alt=""
+                        style={{
+                          width: '65px',
+                          height: '65px',
+                          objectFit: 'cover',
+                          borderRadius: '30px',
+                        }}
+                      />
+                      <div className="logo" aria-label="Logo do site de Podologia">
+                        CuraPé
+                      </div>
+                      
+                    </div>
+
           <div className="user-menu">
             <div className="user-info">
               <div className="user-name">{user?.nome ? `Dr(a). ${user.nome}` : "Usuário"}</div>
@@ -154,7 +167,7 @@ export default function HistoricoPodologo() {
             </div>
           </div>
         </div>
-      </motion.header>
+      </header>
 
       <div className="dashboard container">
         <motion.aside

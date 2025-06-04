@@ -15,6 +15,10 @@
   height: auto;
 }
 
+.header-Historico{
+  position: absolute;
+}
+
 
 /* Cabeçalho do card */
 .patient-details-card .card-header {
@@ -188,10 +192,12 @@
 /* Header */
 .header-content {
   display: flex;
-  justify-content:space-around;
+  justify-content:center;
   align-items: center;
-  gap: 400px;
+  gap: 142vh;
 }
+
+
 
 .logo {
   display: flex;

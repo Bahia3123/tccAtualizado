@@ -3,6 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie'; // ⬅️ ADICIONADO
 import '../componentes/css/PainelPodologo.css';
 import logo from '../assets/img/logo-curape.png';
 import { useUser } from '../context/userContext';
@@ -17,41 +18,54 @@ const PainelPodologo = () => {
   };
 
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const response = await axios.get('/api/usuario'); 
-        setUser(response.data);
-      } catch (error) {
-        console.error("Erro ao buscar usuário:", error);
+    const loadUserFromCookie = () => {
+      const userCookie = Cookies.get('user');
+      if (userCookie) {
+        try {
+          const userData = JSON.parse(userCookie);
+          setUser(userData);
+        } catch (err) {
+          console.error("Erro ao ler cookie do usuário:", err);
+        }
       }
     };
-    
+
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get('/api/usuario');
+        setUser(response.data);
+        Cookies.set('user', JSON.stringify(response.data), { expires: 7 }); // ⬅️ SALVAR NO COOKIE
+      } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+        loadUserFromCookie(); // ⬅️ SE DER ERRO, TENTA PEGAR DO COOKIE
+      }
+    };
+
     fetchUser();
   }, [setUser]);
 
   return (
     <>
-    <div id='principal-painel'>
-      <motion.div initial="hidden" animate="visible" variants={containerVariants}>
-         <motion.header initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
-                
-                <div className="container_header-content">
-                  <div className="logo">
-                    <img src={logo} alt="logo" />
-                    <h1>CuraPé</h1>
-                  </div>
-                  <div className="user-menu">
-                    <div className="user-info">
-                      <div className="user-name">{user?.nome ? `Dr(a). ${user.nome}` : "Usuário"}</div>
-                      <div className="user-role">Podólogo</div>
-                    </div>
-                    <div className="user-avatar">
-                      {user?.nome ? user.nome.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2) : "??"}
-                    </div>
-                  </div>
+      <div id='principal-painel'>
+        <motion.div initial="hidden" animate="visible" variants={containerVariants}>
+          <motion.header initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
+            <div className="container_header-content">
+              <div className="logo">
+                <img src={logo} alt="logo" />
+                <h1>CuraPé</h1>
+              </div>
+              <div className="user-menu">
+                <div className="user-info">
+                  <div className="user-name">{user?.nome ? `Dr(a). ${user.nome}` : "Usuário"}</div>
+                  <div className="user-role">Podólogo</div>
                 </div>
-              </motion.header>
-      </motion.div>
+                <div className="user-avatar">
+                  {user?.nome ? user.nome.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2) : "??"}
+                </div>
+              </div>
+            </div>
+          </motion.header>
+        </motion.div>
 
       <div className="container">
         <div className="dashboard">

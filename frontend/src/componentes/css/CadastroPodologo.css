@@ -2,7 +2,7 @@
 
 :root {
     /* Cores principais */
-    --primary-color: #2bb342;
+    --primary-color: #309941;
     --primary-dark: #2bb342;
     --primary-light: rgba(52, 152, 219, 0.1);
     
@@ -176,7 +176,7 @@ input:focus + .input-icon {
 
 /* Botão de Envio premium */
 button[type="submit"] {
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    background: #2bb342;
     color: var(--white);
     border: none;
     padding: 1.0625rem;
