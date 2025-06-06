@@ -17,6 +17,7 @@
 .historico-container{
   width: 100vw;
   height: 100vh;
+  overflow-x: auto;
 }
 
 .page-title{
@@ -67,7 +68,6 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
-  overflow-y: auto;
 }
 
 /* Linha de informação */
