@@ -135,11 +135,11 @@ export default function HistoricoPodologo() {
   };
 
   return (
-     <div id="historico-principal">
+    <div id="historico-principal">
     <div className="historico-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
       <header className="header-Historico" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
         
-        <div className="header-content">
+        <div className="container_header-content">
           <div className="header-left">
                       <img
                         src={logo}
@@ -183,6 +183,14 @@ export default function HistoricoPodologo() {
               >
                    <span className="icon">🏠</span>
                 <span>Home</span>
+              </NavLink>
+
+              <NavLink
+                to="/Formulario"
+                className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+              >
+                   <span className="icon">⚠️</span>
+                <span>Atendimento</span>
               </NavLink>
 
               <NavLink

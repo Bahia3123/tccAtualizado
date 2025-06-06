@@ -48,7 +48,7 @@ const PainelPodologo = () => {
     <>
       <div id='principal-painel'>
         <motion.div initial="hidden" animate="visible" variants={containerVariants}>
-          <motion.header initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
+          <motion.                                                                                                                              header initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
             <div className="container_header-content">
               <div className="logo">
                 <img src={logo} alt="logo" />
@@ -67,7 +67,7 @@ const PainelPodologo = () => {
           </motion.header>
         </motion.div>
 
-      <div className="container">
+       <div className="container">
         <div className="dashboard">
           <aside className="sidebar">
             <nav>
@@ -77,6 +77,14 @@ const PainelPodologo = () => {
               >
                    <span className="icon">🏠</span>
                 <span>Home</span>
+              </NavLink>
+
+              <NavLink
+                to="/Formulario"
+                className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+              >
+                   <span className="icon">⚠️</span>
+                <span>Atendimento</span>
               </NavLink>
 
               <NavLink

@@ -9,15 +9,22 @@
   overflow: hidden;
   transition: all 0.3s ease;
 }
+.root{
+  width: 100vw;
+  height: 100vh;
+} 
 
 .historico-container{
   width: 100vw;
-  height: auto;
+  height: 100vh;
 }
 
-.header-Historico{
-  position: absolute;
+.page-title{
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
 }
+
 
 
 /* Cabeçalho do card */
@@ -60,6 +67,7 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  overflow-y: auto;
 }
 
 /* Linha de informação */
@@ -137,8 +145,7 @@
 }
 
 .search-input:focus, .filter-select:focus {
-  background: linear-gradient(to right, #2ecc71, #27ae60);
-}
+background-color: white;}
 
 /* Sidebar */
 .sidebar {
@@ -161,7 +168,8 @@
 }
 
 .nav-item:hover {
-  background: #e2ecff;
+  background: #eafaf1;
+  color: #222;
 }
 
 .nav-item.active {
@@ -190,11 +198,11 @@
 }
 
 /* Header */
-.header-content {
+.container_header-content {
   display: flex;
   justify-content:center;
   align-items: center;
-  gap: 142vh;
+  gap: 960px;
 }
 
 
@@ -202,7 +210,10 @@
 .logo {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 35px;
+  font-size: 1.75rem;
+
+
 }
 
 .logo img {
