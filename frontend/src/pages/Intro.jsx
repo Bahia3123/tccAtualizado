@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import '../componentes/css/Intro.css';
 import logo from '../assets/img/logo-curape.png';
-import img1 from '../assets/img/servicos-de-podologia-em-sorocaba.jpg.webp';
-import img2 from '../assets/img/unha-encravada-em-sorocaba-feethouse-710x375.jpg';
-import img3 from '../assets/img/Podoposturologia.jpg';
-import img4 from '../assets/img/deformidades.jpg';
-import img5 from '../assets/img/Atendimento domiciliar.jpg';
+import img1 from '../assets/img/Atendimento.png';
+import img2 from '../assets/img/Historico.png';
+import img3 from '../assets/img/Salvos.png';
+import img4 from '../assets/img/Prescricao.png';
 import Podologo from './LoginPodologo'
 
 
@@ -76,8 +75,9 @@ const PaginaInicial = () => {
       <main>
         <h1>Bem-vindo à CuraPé</h1>
         <p className="intro">
-          Seu espaço dedicado ao cuidado dos seus pés com excelência e profissionais qualificados.
-          Navegue pelo site e conheça nossos serviços, agende consultas e mantenha a saúde dos seus pés em dia!
+          Apresentamos uma nova ferramenta desenvolvida especialmente para podólogos profissionais que desejam otimizar seu tempo e elevar a 
+          eficiência de seus atendimentos. Com foco na agilidade, excelência e apoio de profissionais qualificados, nossa solução foi criada para
+          transformar sua rotina. Explore nossos recursos, conheça nossos serviços e descubra como é possível atender com mais qualidade e menos esforço!
         </p>
 
         <section className="image-section" aria-label="Seção de imagens ilustrativas com descrições">
@@ -95,9 +95,10 @@ const PaginaInicial = () => {
               />
             </div>
             <div className="image-description">
-              <h3>Cuidados Básicos com os Pés</h3>
+              <h3> Realizar um novo atendimento</h3>
               <p>
-                Os cuidados básicos incluem o corte e lixamento das unhas, tratamento de calosidades e calos, além da hidratação e cuidados com a pele dos pés.
+              Inicie um novo atendimento de forma prática e organizada. Registre as informações do paciente, defina o procedimento e conte com o suporte da nossa 
+              ferramenta para garantir um atendimento rápido, eficiente e com qualidade profissional.
               </p>
             </div>
           </article>
@@ -116,10 +117,10 @@ const PaginaInicial = () => {
               />
             </div>
             <div className="image-description">
-              <h3>Tratamento de Unhas Encravadas</h3>
+              <h3>Historico de pacientes</h3>
               <p>
-                As unhas encravadas podem ser extremamente dolorosas e, se não tratadas corretamente, podem levar a infecções.
-                O podólogo é capacitado para remover unhas encravadas e aplicar técnicas que evitam a reincidência do problema.
+              Acesse de forma rápida e segura todos os atendimentos anteriores de seus pacientes. Visualize procedimentos realizados, 
+               e as evoluções dos tratamentos facilitando um acompanhamento completo e personalizado.
               </p>
             </div>
           </article>
@@ -138,11 +139,10 @@ const PaginaInicial = () => {
               />
             </div>
             <div className="image-description">
-              <h3>Podoposturologia</h3>
+              <h3>Informações para contato</h3>
               <p>
-                A podoposturologia envolve a avaliação da postura e da pisada, identificando problemas que podem afetar a saúde dos pés e do corpo.
-                O podólogo prescreve palmilhas ortopédicas personalizadas para corrigir esses problemas.
-                Este é um dos serviços de podologia que pode ajudar a melhorar a postura e a qualidade de vida.
+              Tenha fácil acesso aos dados de contato dos seus pacientes, como telefone, e-mail e endereço. Mantenha a comunicação 
+              organizada e facilite o acompanhamento entre atendimentos.
               </p>
             </div>
           </article>
@@ -161,47 +161,28 @@ const PaginaInicial = () => {
               />
             </div>
             <div className="image-description">
-              <h3>Correção de Deformidades</h3>
+              <h3>Formulário de prescrição</h3>
               <p>
-                Deformidades como joanetes (hallux valgus) podem causar desconforto e dor.
-                O podólogo trata essas condições e pode recomendar o uso de órteses para corrigir problemas posturais e deformidades.
+              Registre e personalize prescrições de forma prática e segura. Com campos específicos para orientações, produtos e dosagens,
+              o formulário facilita a emissão de prescrições claras e profissionais para seus pacientes.
               </p>
             </div>
           </article>
 
-          <article className="image-block">
-            <div className="image-placeholder" role="img" aria-label="Imagem Ilustrativa Consultas e Agenda">
-              <img
-                src={img5}
-                alt="imagem"
-                style={{
-                  width: '95%',
-                  height: '95%',
-                  objectFit: 'cover',
-                  borderRadius: '8px',
-                }}
-              />
-            </div>
-            <div className="image-description">
-              <h3>Atendimento Domiciliar</h3>
-              <p>
-                Para pacientes com mobilidade reduzida ou idosos, o atendimento domiciliar é uma opção valiosa.
-                O podólogo leva seus serviços até a residência do paciente, garantindo que todos recebam os cuidados necessários.
-              </p>
-            </div>
-          </article>
+         
         </section>
       </main>
 
       <footer>
         <div className="footer-text">
           <p>
-            Os serviços de podologia são essenciais para a manutenção da saúde dos pés e, consequentemente, para a melhoria da qualidade de vida. <br />
-            Ao procurar um podólogo, você garante que seus pés receberão o cuidado especializado de que necessitam, prevenindo problemas e tratando condições que podem afetar sua mobilidade e bem-estar. <br />
-            Não deixe de incluir a visita ao podólogo em sua rotina de cuidados com a saúde.
+          Sabemos que os serviços de podologia são fundamentais para a saúde dos pés e para a qualidade de vida dos pacientes. Pensando nisso, 
+          desenvolvemos uma ferramenta inovadora que auxilia podólogos a otimizarem seu tempo nos atendimentos, sem abrir mão da excelência no cuidado. 
+          Com recursos que agilizam o processo clínico e organizam as informações com eficiência, você poderá focar ainda mais no que realmente importa: 
+          oferecer um atendimento de qualidade e promover o bem-estar dos seus pacientes.
           </p>
         </div>
-        &copy; 2025 Podologia. Todos os direitos reservados.
+        &copy; CuraPé 2025. Atenda com mais qualidade e menos esforço!
       </footer>
 
       {/* Modal Paciente */}
