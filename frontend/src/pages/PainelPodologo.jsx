@@ -18,31 +18,33 @@ const PainelPodologo = () => {
   };
 
   useEffect(() => {
-    const loadUserFromCookie = () => {
-      const userCookie = Cookies.get('user');
-      if (userCookie) {
-        try {
-          const userData = JSON.parse(userCookie);
-          setUser(userData);
-        } catch (err) {
-          console.error("Erro ao ler cookie do usuário:", err);
-        }
-      }
-    };
-
-    const fetchUser = async () => {
+  const loadUserFromCookie = () => {
+    const userCookie = Cookies.get('user');
+    if (userCookie) {
       try {
-        const response = await axios.get('/api/usuario');
-        setUser(response.data);
-        Cookies.set('user', JSON.stringify(response.data), { expires: 7 }); // ⬅️ SALVAR NO COOKIE
-      } catch (error) {
-        console.error("Erro ao buscar usuário:", error);
-        loadUserFromCookie(); // ⬅️ SE DER ERRO, TENTA PEGAR DO COOKIE
+        const userData = JSON.parse(userCookie);
+        setUser(userData); // Carrega o usuário do cookie
+      } catch (err) {
+        console.error("Erro ao ler cookie do usuário:", err);
       }
-    };
+    }
+  };
 
-    fetchUser();
-  }, [setUser]);
+  const fetchUser = async () => {
+    try {
+      const response = await axios.get('/api/usuario');
+      setUser(response.data);
+      Cookies.set('user', JSON.stringify(response.data), { expires: 7 }); // Atualiza o cookie
+    } catch (error) {
+      console.error("Erro ao buscar usuário:", error);
+      // Se falhar, não faz nada porque o cookie já foi carregado
+    }
+  };
+
+  loadUserFromCookie(); // Primeiro carrega do cookie
+  fetchUser();          // Depois tenta buscar da API (atualização)
+}, [setUser]);
+
 
   return (
     <>

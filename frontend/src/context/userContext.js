@@ -1,11 +1,21 @@
-import { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 
-// Contexto para os dados do paciente atual
 const UserContext = createContext();
 
-// Provider para o contexto do usuário
 export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const savedUser = Cookies.get('user');
+    if (savedUser) {
+      try {
+        setUser(JSON.parse(savedUser));
+      } catch (e) {
+        console.error('Erro ao carregar usuário do cookie:', e);
+      }
+    }
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
@@ -14,13 +24,4 @@ export const UserProvider = ({ children }) => {
   );
 };
 
-// Hook para acessar o contexto de usuário
-export const useUser = () => {
-  const context = useContext(UserContext);
-
-  if (context === undefined) {
-    throw new Error('useUser precisa estar dentro de um UserProvider');
-  }
-
-  return context;
-};
+export const useUser = () => useContext(UserContext);

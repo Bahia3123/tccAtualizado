@@ -66,7 +66,7 @@ export default function Formulario() {
       .then((response) => {
         if (response.ok) {
           alert('Paciente cadastrado com sucesso!');
-          navigate('/HistoricoPodologo');
+          navigate('/FormularioPrescricaoPD');
         } else {
           alert('Erro ao salvar paciente');
         }
@@ -93,15 +93,15 @@ export default function Formulario() {
           <fieldset>
             <legend>Dados Pessoais</legend>
             <div className="form-group">
-              <label htmlFor="nome">Nome Completo:*</label>
+              <label htmlFor="nome">Nome Completo:</label>
               <input type="text" id="nome" name="nome" required value={formData.nome} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label htmlFor="cpf_rg">CPF/RG:*</label>
+              <label htmlFor="cpf_rg">CPF:</label>
               <input type="text" id="cpf_rg" name="cpf_rg" required value={formData.cpf_rg} onChange={handleChange} />
             </div>
             <div className="form-group">
-              <label htmlFor="data_nascimento">Data de Nascimento:*</label>
+              <label htmlFor="data_nascimento">Data de Nascimento:</label>
               <input type="date" id="data_nascimento" name="data_nascimento" required value={formData.data_nascimento} onChange={handleChange} />
             </div>
           </fieldset>
@@ -133,19 +133,20 @@ export default function Formulario() {
           <fieldset>
             <legend>Contato</legend>
             <div className="form-group">
-              <label htmlFor="telefone">Telefone:*</label>
+              <label htmlFor="telefone">Telefone:</label>
               <input type="tel" id="telefone" name="telefone" required value={formData.telefone} onChange={handleChange} />
             </div>
             <div className="form-group">
               <label htmlFor="email">E-mail:</label>
               <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} />
             </div>
+            <div className="form-actions">
+          <button type="submit">Salvar</button>
+        </div>
           </fieldset>
         )}
 
-        <div className="form-actions">
-          <button type="submit">Salvar</button>
-        </div>
+        
       </form>
     </main>
   );

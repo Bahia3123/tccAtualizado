@@ -34,8 +34,10 @@ header {
   position: relative;
   top: 0;
   height: 200px;
-  width: 100vw;
+  
   display: flex;
+  margin-right: 5px;
+  margin-left: 5px;
   justify-content: center ;
   gap:600px;
   padding: auto;
@@ -49,7 +51,6 @@ header {
   align-items: center;
   gap: 35px;
   padding: 60px;
-  flex-wrap: wrap;
 }
 
 /* Logo placeholder */
@@ -196,6 +197,8 @@ main p.intro {
 footer {
   padding: 15px 10px;
   z-index: 1000;
+  margin-right: 5px;
+  margin-left: 5px;
   background-color: #ade6bb;
   color: #144521;
   text-align: center;
@@ -286,4 +289,3 @@ footer {
   from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
 }
-

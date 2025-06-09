@@ -10,43 +10,32 @@ const PacientesList = () => {
   useEffect(() => {
     const fetchPacientes = async () => {
       try {
-        const dadosMockados = [
-          {
-            id: 1,
-            nomeCompleto: 'João Silva Santos',
-            cpf: '123.456.789-00',
-            rg: '12.345.678-9',
-            dataNascimento: '15/05/1980',
-            telefone: '(11) 98765-4321',
-            email: 'joao.silva@example.com'
-          },
-          {
-            id: 2,
-            nomeCompleto: 'Maria Oliveira Souza',
-            cpf: '987.654.321-00',
-            rg: '98.765.432-1',
-            dataNascimento: '22/10/1992',
-            telefone: '(21) 99876-5432',
-            email: 'maria.oliveira@example.com'
-          },
-          {
-            id: 3,
-            nomeCompleto: 'Carlos Alberto Pereira',
-            cpf: '456.789.123-00',
-            rg: '45.678.912-3',
-            dataNascimento: '03/07/1975',
-            telefone: '(31) 98765-1234',
-            email: 'carlos.pereira@example.com'
-          }
-        ];
-        setPacientes(dadosMockados);
-        setLoading(false);
+        const response = await fetch('http://localhost:3001/PacienteList');
+
+        if (!response.ok) {
+          const errorMessage = `Erro na resposta da API: ${response.status} ${response.statusText}`;
+          console.error(errorMessage);
+          throw new Error(errorMessage);
+        }
+
+        const data = await response.json();
+        const pacientesFormatados = data.map((p, index) => ({
+          id: index + 1,
+          nomeCompleto: p.nome,
+          cpf: p.cpf_rg,
+          dataNascimento: new Date(p.data_nascimento).toLocaleDateString(),
+          telefone: p.telefone,
+          email: p.email,
+        }));
+        setPacientes(pacientesFormatados);
       } catch (err) {
-        setError('Erro ao carregar os pacientes');
+        console.error('Erro ao carregar os pacientes do banco de dados:', err);
+        setError('Erro ao carregar os pacientes do banco de dados. Verifique a conexão com o servidor.');
+      } finally {
         setLoading(false);
-        console.error(err);
       }
     };
+
     fetchPacientes();
   }, []);
 
@@ -55,23 +44,20 @@ const PacientesList = () => {
       const pacientesAtualizados = pacientes.filter(paciente => paciente.id !== id);
       setPacientes(pacientesAtualizados);
       alert('Paciente excluído com sucesso!');
+      // Aqui você pode adicionar uma requisição DELETE se quiser excluir do backend também
     }
   };
 
-  if (loading) return <div className="loading">Carregando pacientes...</div>;
+  if (loading) return <div className="loading">🔄 Carregando pacientes...</div>;
   if (error) return <div className="error">{error}</div>;
 
   return (
     <div className="pacientes-container">
       <div className="header-container">
-        <h1>Pacientes Salvo </h1>
-
-         <Link to="/PainelPodologo" id='voltar'>
-          Home
-        </Link>
-        
+        <h1>Pacientes Salvos</h1>
+        <Link to="/PainelPodologo" id="voltar">🏠 Home</Link>
       </div>
-      
+
       <div className="pacientes-list">
         {pacientes.length > 0 ? (
           <table>
@@ -102,7 +88,7 @@ const PacientesList = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td>RG: {paciente.rg}</td>
+                    <td>RG: {paciente.cpf}</td>
                     <td>E-mail: {paciente.email}</td>
                   </tr>
                 </React.Fragment>

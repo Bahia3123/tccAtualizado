@@ -123,3 +123,27 @@ tr:not(:first-child) {
     padding: 8px 10px;
   }
 }
+.loading {
+  color: #555;
+  font-size: 1.2rem;
+  padding: 20px;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  padding: 20px;
+}
+
+.btn-excluir {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.btn-excluir:hover {
+  background-color: #c9302c;
+}

@@ -1,11 +1,10 @@
 const express = require("express");
 const cors = require("cors");
-const bodyParser = require("body-parser");
 const db = require("./database");
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Rota para cadastrar podólogo
 app.post("/CadastroPodologo", (req, res) => {
@@ -60,26 +59,20 @@ app.post('/LoginPodologo', (req, res) => {
   });
 });
 
-    app.post('/LoginPaciente', (req, res) => {
-      const { email, ncc } = req.body;
-      const sql = 'SELECT * FROM paciente WHERE email = ? AND cpf_rg = ? AND data_nascimento = ?';
-    
-      db.query(sql, [email, ncc, data_nascimento], (err, results) => {
-        if (err) {
-          console.error('Erro na consulta:', err);
-          return res.status(500).json({ error: 'Erro no servidor' });
-        }
-    
-        if (results.length > 0) {
-          return res.status(200).json({
-            success: true,
-            nome: results[0].nome
-          });
-        } else {
-          return res.status(401).json({ success: false, error: 'Credenciais inválidas' });
-        }
+    // Rota GET para listar os pacientes
+app.get('/PacienteList', (req, res) => {
+  const query = 'SELECT * FROM paciente';
+
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Erro ao buscar pacientes:', err);
+      return res.status(500).json({ success: false, error: 'Erro ao buscar pacientes no banco de dados.' });
+    }
+
+    res.status(200).json(results); // Envia a lista de pacientes como JSON
   });
 });
+
 
 
 // Iniciar o servidor

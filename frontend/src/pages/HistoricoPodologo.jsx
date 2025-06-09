@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { useUser  } from "../context/userContext";  // Usando useUser  para acessar o contexto
+import { useUser } from "../context/userContext";  // Usando useUser para acessar o contexto
 import { useHistory } from "../context/historyContext";  // Mantendo o HistoryContext para o restante
 import { NavLink } from 'react-router-dom';
 import { motion, AnimatePresence } from "framer-motion";
 import jsPDF from 'jspdf';
-import 'jspdf-autotable'; // Ensure this is imported correctly
+import 'jspdf-autotable';
 import '../componentes/css/HistoricoPodologo.css';
 import logo from "../assets/img/logo-curape.png";
 
@@ -16,7 +16,9 @@ export default function HistoricoPodologo() {
   const [filterStatus, setFilterStatus] = useState("todos");
   const [showSuccess, setShowSuccess] = useState("");
   const { historico, inativarPaciente, excluirPaciente } = useHistory();
-  const { user } = useUser ();
+  const {user} = useUser();
+
+  
 
   const calcularIdade = (dataNascimento) => {
     if (!dataNascimento) return 0;
@@ -33,6 +35,7 @@ export default function HistoricoPodologo() {
   const toggleExpand = (cpf) => {
     setExpandedPatient(prev => prev === cpf ? null : cpf);
   };
+
 
   const handleInativarPaciente = (cpf) => {
     if (window.confirm('Tem certeza que deseja marcar este paciente como inativo?')) {
@@ -80,22 +83,18 @@ export default function HistoricoPodologo() {
     const pageWidth = doc.internal.pageSize.getWidth();
     const pageHeight = doc.internal.pageSize.getHeight();
 
-    // Add logo
     const imgWidth = 60;
     const imgHeight = 60;
     const imgX = (pageWidth - imgWidth) / 2;
     doc.addImage(logo, "PNG", imgX, 30, imgWidth, imgHeight);
 
-    // Add title
     doc.setFontSize(24);
     doc.text("Histórico de Pacientes", pageWidth / 2, 110, { align: "center" });
 
-    // Add date
     doc.setFontSize(12);
     doc.text(`Emitido em: ${new Date().toLocaleString()}`, pageWidth / 2, 120, { align: "center" });
     doc.addPage();
 
-    // Define table columns and rows
     const tableColumn = [
       "Nome", "CPF/RG", "Nascimento", "Idade", "Telefone",
       "E-mail", "Status", "Cadastro"
@@ -112,7 +111,6 @@ export default function HistoricoPodologo() {
       paciente.dataHoraCadastro,
     ]);
 
-    // Use autoTable
     doc.autoTable({
       head: [tableColumn],
       body: tableRows,
@@ -123,7 +121,6 @@ export default function HistoricoPodologo() {
       margin: { left: 10, right: 10 },
     });
 
-    // Add page numbers
     const pageCount = doc.internal.getNumberOfPages();
     for (let i = 1; i <= pageCount; i++) {
       doc.setPage(i);
@@ -136,57 +133,66 @@ export default function HistoricoPodologo() {
       );
     }
 
-    // Save the PDF
     doc.save("historico_pacientes.pdf");
   };
 
   return (
     <div id="historico-principal">
-      <div className="historico-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-        <header className="header-Historico" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
-          <div className="header-content">
-            <div className="header-left">
-              <img
-                src={logo}
-                alt=""
-                style={{
-                  width: '65px',
-                  height: '65px',
-                  objectFit: 'cover',
-                  borderRadius: '30px',
-                }}
-              />
-              <div className="logo" aria-label="Logo do site de Podologia">
-                CuraPé
-              </div>
-            </div>
+    <div className="historico-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+      <header className="header-Historico" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
+        
+        <div className="container_header-content">
+          <div className="header-left">
+                      <img
+                        src={logo}
+                        alt=""
+                        style={{
+                          width: '65px',
+                          height: '65px',
+                          objectFit: 'cover',
+                          borderRadius: '30px',
+                        }}
+                      />
+                      <div className="logo" aria-label="Logo do site de Podologia">
+                        CuraPé
+                      </div>
+                      
+                    </div>
 
-            <div className="user-menu">
-              <div className="user-info">
-                <div className="user-name">{user?.nome ? `Dr(a). ${user.nome}` : "Usuário"}</div>
-                <div className="user-role">Podólogo</div>
-              </div>
-              <div className="user-avatar">
-                {user?.nome ? user.nome.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2) : "??"}
-              </div>
+          <div className="user-menu">
+            <div className="user-info">
+              <div className="user-name">{user?.nome ? `Dr(a). ${user.nome}` : "Usuário"}</div>
+              <div className="user-role">Podólogo</div>
+            </div>
+            <div className="user-avatar">
+              {user?.nome ? user.nome.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2) : "??"}
             </div>
           </div>
-        </header>
+        </div>
+      </header>
 
-        <div className="dashboard container">
-          <motion.aside
-            className="sidebar"
-            initial={{ x: -50, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-          >
-            <nav>
-              <NavLink
+      <div className="dashboard container">
+        <motion.aside
+          className="sidebar"
+          initial={{ x: -50, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <nav>
+             <NavLink
                 to="/PainelPodologo"
                 className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
               >
-                <span className="icon">🏠</span>
+                   <span className="icon">🏠</span>
                 <span>Home</span>
+              </NavLink>
+
+              <NavLink
+                to="/Formulario"
+                className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+              >
+                   <span className="icon">⚠️</span>
+                <span>Atendimento</span>
               </NavLink>
 
               <NavLink
@@ -212,135 +218,135 @@ export default function HistoricoPodologo() {
                 <span className="icon">📄</span>
                 <span>Prescrição</span>
               </NavLink>
-            </nav>
-          </motion.aside>
+          </nav>
+        </motion.aside>
 
-          <motion.main
-            className="main-content"
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-          >
-            {showSuccess && (
-              <div className="success-message">
-                {showSuccess}
+        <motion.main
+          className="main-content"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
+          {showSuccess && (
+            <div className="success-message">
+              {showSuccess}
+            </div>
+          )}
+
+          <div className="page-header">
+            <h2 className="page-title">Histórico Pacientes</h2>
+            <button className="btn" onClick={exportarParaPDF}>⬇ Exportar PDF</button>
+          </div>
+
+          <div className="search-filter">
+            <input
+              type="text"
+              className="search-input"
+              placeholder="Pesquisar por nome, CPF, telefone ou e-mail..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <select
+              className="filter-select"
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+            >
+              <option value="todos">Todos</option>
+              <option value="ativo">Ativos</option>
+              <option value="inativo">Inativos</option>
+            </select>
+            <select
+              className="filter-select"
+              value={sortOrder}
+              onChange={(e) => setSortOrder(e.target.value)}
+            >
+              <option value="asc">Ordenar A-Z</option>
+              <option value="desc">Ordenar Z-A</option>
+            </select>
+          </div>
+
+          <div className="history-tabs">
+            {["patients", "prescriptions"].map((tab) => (
+              <div
+                key={tab}
+                className={`tab ${activeTab === tab ? "active" : ""}`}
+                onClick={() => handleTabClick(tab)}
+              >
+                {tab === "patients" && "Pacientes"}
+                {tab === "prescriptions" && "Prescrições"}
               </div>
-            )}
+            ))}
+          </div>
 
-            <div className="page-header">
-              <h2 className="page-title">Histórico Pacientes</h2>
-              <button className="btn" onClick={exportarParaPDF}>⬇ Exportar PDF</button>
-            </div>
-
-            <div className="search-filter">
-              <input
-                type="text"
-                className="search-input"
-                placeholder="Pesquisar por nome, CPF, telefone ou e-mail..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <select
-                className="filter-select"
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
-              >
-                <option value="todos">Todos</option>
-                <option value="ativo">Ativos</option>
-                <option value="inativo">Inativos</option>
-              </select>
-              <select
-                className="filter-select"
-                value={sortOrder}
-                onChange={(e) => setSortOrder(e.target.value)}
-              >
-                <option value="asc">Ordenar A-Z</option>
-                <option value="desc">Ordenar Z-A</option>
-              </select>
-            </div>
-
-            <div className="history-tabs">
-              {["patients", "prescriptions"].map((tab) => (
+          <div className="history-content">
+            {activeTab === "patients" && filteredPacientes.length > 0 ? (
+              filteredPacientes.map((paciente) => (
                 <div
-                  key={tab}
-                  className={`tab ${activeTab === tab ? "active" : ""}`}
-                  onClick={() => handleTabClick(tab)}
+                  key={paciente.cpf_rg}
+                  className={`patient-details-card ${expandedPatient === paciente.cpf_rg ? "expanded" : ""} ${paciente.status === 'inativo' ? 'inactive' : ''}`}
                 >
-                  {tab === "patients" && "Pacientes"}
-                  {tab === "prescriptions" && "Prescrições"}
-                </div>
-              ))}
-            </div>
-
-            <div className="history-content">
-              {activeTab === "patients" && filteredPacientes.length > 0 ? (
-                filteredPacientes.map((paciente) => (
-                  <div
-                    key={paciente.cpf_rg}
-                    className={`patient-details-card ${expandedPatient === paciente.cpf_rg ? "expanded" : ""} ${paciente.status === 'inativo' ? 'inactive' : ''}`}
-                  >
-                    <div className="card-header">
-                      <h2 dangerouslySetInnerHTML={{ __html: highlightText(paciente.nome) }} />
-                      {paciente.status === 'inativo' && <span className="inactive-badge">INATIVO</span>}
-                      <div className="card-actions">
+                  <div className="card-header">
+                    <h2 dangerouslySetInnerHTML={{ __html: highlightText(paciente.nome) }} />
+                    {paciente.status === 'inativo' && <span className="inactive-badge">INATIVO</span>}
+                    <div className="card-actions">
+                      <button
+                        className="expand-btn"
+                        onClick={() => toggleExpand(paciente.cpf_rg)}
+                      >
+                        {expandedPatient === paciente.cpf_rg ? "Recolher ▲" : "Expandir ▼"}
+                      </button>
+                      {paciente.status === 'ativo' ? (
                         <button
-                          className="expand-btn"
-                          onClick={() => toggleExpand(paciente.cpf_rg)}
+                          className="inactive-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleInativarPaciente(paciente.cpf_rg);
+                          }}
                         >
-                          {expandedPatient === paciente.cpf_rg ? "Recolher ▲" : "Expandir ▼"}
+                          Inativar
                         </button>
-                        {paciente.status === 'ativo' ? (
-                          <button
-                            className="inactive-btn"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleInativarPaciente(paciente.cpf_rg);
-                            }}
-                          >
-                            Inativar
-                          </button>
-                        ) : (
-                          <button
-                            className="delete-permanent-btn"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleExcluirPaciente(paciente.cpf_rg);
-                            }}
-                          >
-                            Excluir
-                          </button>
-                        )}
-                      </div>
-                    </div>
-
-                    <AnimatePresence>
-                      {expandedPatient === paciente.cpf_rg && (
-                        <motion.div
-                          className="patient-info-grid compact"
-                          initial={{ opacity: 0, height: 0 }}
-                          animate={{ opacity: 1, height: "auto" }}
-                          exit={{ opacity: 0, height: 0 }}
-                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                      ) : (
+                        <button
+                          className="delete-permanent-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleExcluirPaciente(paciente.cpf_rg);
+                          }}
                         >
-                          {Object.entries(paciente).map(([key, value]) => (
-                            key !== "nome" && key !== "cpf_rg" && key !== "status" && (
-                              <div className="patient-info-line" key={key}>
-                                <strong>{key.replace(/_/g, " ")}:</strong> {value}
-                              </div>
-                            )
-                          ))}
-                        </motion.div>
+                          Excluir
+                        </button>
                       )}
-                    </AnimatePresence>
+                    </div>
                   </div>
-                ))
-              ) : (
-                <p>Nenhum paciente encontrado.</p>
-              )}
-            </div>
-          </motion.main>
-        </div>
+
+                  <AnimatePresence>
+                    {expandedPatient === paciente.cpf_rg && (
+                      <motion.div
+                        className="patient-info-grid compact"
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.3, ease: "easeInOut" }}
+                      >
+                        {Object.entries(paciente).map(([key, value]) => (
+                          key !== "nome" && key !== "cpf_rg" && key !== "status" && (
+                            <div className="patient-info-line" key={key}>
+                              <strong>{key.replace(/_/g, " ")}:</strong> {value}
+                            </div>
+                          )
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))
+            ) : (
+              <p>Nenhum paciente encontrado.</p>
+            )}
+          </div>
+        </motion.main>
       </div>
+    </div>
     </div>
   );
 }

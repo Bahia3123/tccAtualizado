@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import { useUser } from '../context/userContext';
 import '../componentes/css/LoginPodologo.css';
@@ -13,7 +14,7 @@ const Podologo = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  
+
   // Obter setUser do contexto de forma segura
   const { setUser } = useUser() || {};
 
@@ -40,8 +41,7 @@ const Podologo = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Verifica se setUser existe antes de continuar
+
     if (typeof setUser !== 'function') {
       setError('Erro no sistema. Por favor, recarregue a página.');
       console.error('setUser não é uma função. Contexto pode não estar configurado corretamente.');
@@ -55,26 +55,29 @@ const Podologo = () => {
 
     try {
       const response = await axios.post('http://localhost:3001/LoginPodologo', form);
-      
+
       if (response.status === 200) {
-        // Garante que setUser existe antes de chamá-lo
-        if (typeof setUser === 'function') {
-          setUser({ 
-            nome: response.data.nome,
-            email: response.data.email,
-            ncc: response.data.ncc,
-            token: response.data.token // se aplicável
-          });
-          navigate('/PainelPodologo');
-        } else {
-          throw new Error('Função setUser não disponível');
-        }
+        const userData = {
+          nome: response.data.nome,
+          email: response.data.email,
+          ncc: response.data.ncc,
+          token: response.data.token
+        };
+
+        // Salvar no contexto
+        setUser(userData);
+
+        // Salvar no cookie
+        Cookies.set('user', JSON.stringify(userData), { expires: 7 }); // expira em 7 dias
+
+        // Navegar para o painel
+        navigate('/PainelPodologo');
       } else {
         setError('Email ou número de classe inválidos.');
       }
     } catch (err) {
       console.error('Erro detalhado:', err);
-      
+
       if (err.response) {
         setError(err.response.data.message || 'Credenciais inválidas');
       } else if (err.message.includes('setUser')) {
@@ -91,7 +94,7 @@ const Podologo = () => {
     <div className="login-container">
       <h2>Login Podólogo</h2>
       {error && <div className="error-message">{error}</div>}
-      
+
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email:</label>
@@ -118,7 +121,7 @@ const Podologo = () => {
             disabled={loading}
           />
         </div>
-        
+
         <button type="submit" disabled={loading}>
           {loading ? 'Carregando...' : 'Entrar'}
         </button>
