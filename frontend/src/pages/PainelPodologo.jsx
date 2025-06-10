@@ -82,6 +82,14 @@ const PainelPodologo = () => {
               </NavLink>
 
               <NavLink
+                to="/Formulario"
+                className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
+              >
+                   <span className="icon">⚠️</span>
+                <span>Atendimento</span>
+              </NavLink>
+
+              <NavLink
                 to="/HistoricoPodologo"
                 className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
               >
@@ -115,7 +123,7 @@ const PainelPodologo = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
             >
-              <h2>Bem-vindo, {user?.nome ? `Dr(a). ${user.nome}` : "Dr(a)."}</h2>
+              <h2>Bem-vinda, {user?.nome ? `Dr(a). ${user.nome}` : "Podóloga"}</h2>
               <p>Acompanhe seus pacientes e visualize todo o histórico de atendimentos realizados.</p>
             </motion.div>
 
