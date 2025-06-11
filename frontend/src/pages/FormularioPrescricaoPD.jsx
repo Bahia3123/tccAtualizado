@@ -7,7 +7,7 @@ import '../componentes/css/FormularioPrescricaoPD.css';
 const FormularioPrescricaoPD = () => {
   const [formData, setFormData] = useState({
     podiatristName: "",
-    categoriaName: "Podóloga",
+    categoriaName: "Podóloga(o)",
     nccName: "",
     patientName: "",
     ingredients: [],
@@ -73,7 +73,7 @@ const FormularioPrescricaoPD = () => {
   };
 
   const generatePDF = () => {
-  const doc = new jsPDF('p', 'pt', 'A5');
+  const doc = new jsPDF('p', 'pt', 'A4');
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
 
@@ -149,15 +149,15 @@ y += 15;
   y += usageLines.length * 15;
 
   y += 30;
-  doc.setFont("helvetica", "bold");
-  doc.text("Local e data:", margin, y);
-  y += 20;
+doc.setFont("helvetica", "bold");
+doc.text("Local e data:", margin, y);
+y += 20;
 
-  doc.setFont("helvetica", "normal");
-  doc.text(`Local: ${formData.location || "________________"}`, margin, y);
-  y += 20;
-  doc.text(`Data: ${formData.date || "____/____/______"}`, margin, y);
-  y += 40;
+doc.setFont("helvetica", "normal");
+// Combina local e data em uma única linha com separador
+const localDataLine = `${formData.location || "________________"}   -   ${formData.date || "__/__/____"}`;
+doc.text(localDataLine, margin, y);
+y += 40;
 
 
 const lineWidth = 200;
@@ -204,7 +204,7 @@ y += 15;
   return (
     <div className="prescription-form">
       <div className="form-header">
-        <input 
+        <input disabled
           type="text"
           name="podiatristName"
           value={formData.podiatristName}
@@ -212,7 +212,7 @@ y += 15;
           className="input-large"
           placeholder='Nome profissional'
         />
-        <input 
+        <input  disabled
           type="text"
           name="nccName"
           value={formData.nccName}
@@ -291,7 +291,7 @@ y += 15;
           value={formData.location}
           onChange={handleInputChange}
           className="input-medium"
-          placeholder='Local de atendimento'
+          placeholder="(Cidade)"
 
         />
         <input abileted
@@ -309,13 +309,7 @@ y += 15;
 
       <div className="contact-section">
         <h3 className="section-title">
-          <input abileted
-            type="text"
-            value={formData.podiatristName.replace("Podóloga ", "")}
-            onChange={handleNameOnlyChange}
-            placeholder="Nome da Podóloga"
-            className="input-medium"
-          />
+        
         </h3>
 
         <div className="contact-info">

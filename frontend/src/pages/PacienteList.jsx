@@ -64,9 +64,10 @@ const PacientesList = () => {
             <thead>
               <tr>
                 <th>Nome Completo</th>
-                <th>CPF/RG</th>
+                <th>CPF</th>
                 <th>Data de Nascimento</th>
                 <th>Contato</th>
+                <th>E-mail</th>
                 <th>Ações</th>
               </tr>
             </thead>
@@ -75,9 +76,11 @@ const PacientesList = () => {
                 <React.Fragment key={paciente.id}>
                   <tr>
                     <td rowSpan="2">{paciente.nomeCompleto}</td>
-                    <td>CPF: {paciente.cpf}</td>
+                    <td> {paciente.cpf}</td>
                     <td rowSpan="2">{paciente.dataNascimento}</td>
-                    <td>Telefone: {paciente.telefone}</td>
+                    <td> {paciente.telefone}</td>
+                    <td> {paciente.email}</td>
+
                     <td rowSpan="2">
                       <button 
                         className="btn-excluir"
@@ -88,8 +91,6 @@ const PacientesList = () => {
                     </td>
                   </tr>
                   <tr>
-                    <td>RG: {paciente.cpf}</td>
-                    <td>E-mail: {paciente.email}</td>
                   </tr>
                 </React.Fragment>
               ))}
