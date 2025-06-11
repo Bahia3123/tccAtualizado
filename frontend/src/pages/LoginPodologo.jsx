@@ -126,9 +126,6 @@ const Podologo = () => {
           {loading ? 'Carregando...' : 'Entrar'}
         </button>
 
-        <button type="button" onClick={() => navigate('/')}>
-          Alternar Acesso
-        </button>
       </form>
     </div>
   );

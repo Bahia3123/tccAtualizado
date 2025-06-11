@@ -73,68 +73,116 @@ export default function HistoricoPodologo() {
     return text.toString().replace(regex, (match) => `<mark>${match}</mark>`);
   };
 
-  const exportarParaPDF = () => {
-    if (filteredPacientes.length === 0) {
-      alert("Nenhum paciente para exportar!");
-      return;
-    }
+  const generatePatientHistoryPDF = () => {
+  if (filteredPacientes.length === 0) {
+    alert("Nenhum paciente para exportar!");
+    return;
+  }
 
-    const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const pageHeight = doc.internal.pageSize.getHeight();
+  const doc = new jsPDF('p', 'pt', 'A4');
+  const pageWidth = doc.internal.pageSize.getWidth();
+  const margin = 40;
+  let y = 60;
 
-    const imgWidth = 60;
-    const imgHeight = 60;
-    const imgX = (pageWidth - imgWidth) / 2;
-    doc.addImage(logo, "PNG", imgX, 30, imgWidth, imgHeight);
+  // Cores
+  const black = [0, 0, 0];
+  const gray = [100, 100, 100];
+  const primaryColor = [0, 105, 92]; // Verde profissional
 
-    doc.setFontSize(24);
-    doc.text("Histórico de Pacientes", pageWidth / 2, 110, { align: "center" });
+  // Cabeçalho com logo e nome
+  const logoWidth = 40;
+  const logoHeight = 40;
+  const logoX = margin;
+  const logoY = 30;
+  
+  // Adiciona a logo
+  if (logo) {
+    doc.addImage(logo, "PNG", logoX, logoY, logoWidth, logoHeight);
+  }
+  
+  // Texto "CuraPé" alinhado com a logo
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(18);
+  doc.setTextColor(...primaryColor);
+  const textX = logoX + logoWidth + 10;
+  const textY = logoY + (logoHeight / 2) + 5;
+  doc.text("CuraPé", textX, textY);
 
-    doc.setFontSize(12);
-    doc.text(`Emitido em: ${new Date().toLocaleString()}`, pageWidth / 2, 120, { align: "center" });
-    doc.addPage();
+  // Título principal centralizado
+  y = logoY + logoHeight + 40;
+  doc.setFontSize(20);
+  doc.setTextColor(...black);
+  doc.text("Histórico de Pacientes", pageWidth / 2, y, { align: "center" });
+  y += 40;
 
-    const tableColumn = [
-      "Nome", "CPF/RG", "Nascimento", "Idade", "Telefone",
-      "E-mail", "Status", "Cadastro"
-    ];
+  // Linha divisória
+  doc.setLineWidth(0.5);
+  doc.setDrawColor(...gray);
+  doc.line(margin, y, pageWidth - margin, y);
+  y += 30;
 
-    const tableRows = filteredPacientes.map(paciente => [
+  // Preparar dados para a tabela
+  const tableData = filteredPacientes.map(paciente => ({
+    nome: paciente.nome || "-",
+    documento: paciente.cpf_rg || "-",
+    nascimento: paciente.data_nascimento || "-",
+    idade: calcularIdade(paciente.data_nascimento) + " anos" || "-",
+    telefone: paciente.telefone || "-",
+    email: paciente.email || "-",
+    status: paciente.status === 'ativo' ? 'Ativo' : 'Inativo',
+    cadastro: new Date(paciente.data_cadastro).toLocaleString() || "-"
+  }));
+
+  // Configuração da tabela
+  doc.autoTable({
+    head: [
+      ["Nome", "CPF/RG", "Nascimento", "Idade", "Telefone", "E-mail", "Status", "Cadastro"]
+    ],
+    body: tableData.map(paciente => [
       paciente.nome,
-      paciente.cpf_rg,
-      paciente.data_nascimento,
-      paciente.idade || calcularIdade(paciente.data_nascimento),
+      paciente.documento,
+      paciente.nascimento,
+      paciente.idade,
       paciente.telefone,
       paciente.email,
       paciente.status,
-      paciente.dataHoraCadastro,
-    ]);
-
-    doc.autoTable({
-      head: [tableColumn],
-      body: tableRows,
-      startY: 20,
-      styles: { fontSize: 9 },
-      headStyles: { fillColor: [41, 128, 185] },
-      theme: "striped",
-      margin: { left: 10, right: 10 },
-    });
-
-    const pageCount = doc.internal.getNumberOfPages();
-    for (let i = 1; i <= pageCount; i++) {
-      doc.setPage(i);
-      doc.setFontSize(10);
-      doc.text(
-        `CuraPé Podologia | Página ${i} de ${pageCount}`,
-        pageWidth / 2,
-        pageHeight - 10,
-        { align: "center" }
-      );
+      paciente.cadastro
+    ]),
+    startY: y,
+    headStyles: {
+      fillColor: primaryColor,
+      textColor: 255,
+      fontStyle: 'bold'
+    },
+    alternateRowStyles: {
+      fillColor: [232, 245, 233]
+    },
+    margin: { left: margin, right: margin },
+    styles: {
+      fontSize: 8,
+      cellPadding: 4,
+      overflow: 'linebreak'
+    },
+    columnStyles: {
+      0: { cellWidth: 'auto' }, // Nome
+      1: { cellWidth: 'auto' }, // CPF/RG
+      2: { cellWidth: 'auto' }, // Nascimento
+      3: { cellWidth: 'auto' }, // Idade
+      4: { cellWidth: 'auto' }, // Telefone
+      5: { cellWidth: 'auto' }, // Email
+      6: { cellWidth: 'auto' }, // Status
+      7: { cellWidth: 'auto' }  // Cadastro
     }
+  });
 
-    doc.save("historico_pacientes.pdf");
-  };
+  // Data de emissão no rodapé
+  const finalY = doc.lastAutoTable.finalY || y + 200;
+  doc.setFontSize(10);
+  doc.setTextColor(...gray);
+  doc.text(`Emitido em: ${new Date().toLocaleString()}`, pageWidth / 2, finalY + 30, { align: "center" });
+
+  doc.save("historico_pacientes.pdf");
+};
 
   return (
     <div id="historico-principal">
@@ -235,7 +283,7 @@ export default function HistoricoPodologo() {
 
           <div className="page-header">
             <h2 className="page-title">Histórico Pacientes</h2>
-            <button className="btn" onClick={exportarParaPDF}>⬇ Exportar PDF</button>
+            <button className="btn" onClick={generatePatientHistoryPDF}>⬇ Exportar PDF</button>
           </div>
 
           <div className="search-filter">

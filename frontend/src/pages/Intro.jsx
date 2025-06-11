@@ -32,11 +32,11 @@ const PaginaInicial = () => {
             </div>
             <div className="contact-info" aria-label="Informações de contato e redes sociais">
               <span>
-                <a href="tel:+5511999999999" aria-label="Telefone">(11) 94002-8922</a>
+                <a href="tel:+55 19 98985-0700" aria-label="Telefone">(19) 98985-0700</a>
               </span>
               <span> | </span>
               <a
-                href="https://www.facebook.com/podologia"
+                href="https://www.facebook.com/cb.podo"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Facebook"
@@ -45,7 +45,7 @@ const PaginaInicial = () => {
               </a>
               <span> | </span>
               <a
-                href="https://www.instagram.com/podologia"
+                href="https://www.instagram.com/cb.podologia/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
@@ -53,7 +53,7 @@ const PaginaInicial = () => {
                 Instagram
               </a>
               <span> | </span>
-              <a href="mailto:contato@podologia.com" aria-label="Enviar email">
+              <a href="https://mail.google.com/mail/u/0/#search/cristianebarbosa.podologa%40gmail.com?compose=new" aria-label="Enviar email">
                 Fale Conosco
               </a>
             </div>

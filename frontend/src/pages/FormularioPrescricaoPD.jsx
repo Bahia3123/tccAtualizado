@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import logo from "../assets/img/logo-curape.png";
 import '../componentes/css/FormularioPrescricaoPD.css';
 
 const FormularioPrescricaoPD = () => {
@@ -75,16 +76,43 @@ const FormularioPrescricaoPD = () => {
   const generatePDF = () => {
   const doc = new jsPDF('p', 'pt', 'A5');
   const pageWidth = doc.internal.pageSize.getWidth();
+  const pageHeight = doc.internal.pageSize.getHeight();
+
   const margin = 40;
   let y = 60;
 
   const black = [0, 0, 0];
   const gray = [100, 100, 100];
+  
+  // Cabeçalho com logo e nome
+  const logoWidth = 40; 
+  const logoHeight = 40; 
+  const logoX = margin;
+  const logoY = 30;
+  
+  // Adiciona a logo
+  doc.addImage(logo, "PNG", logoX, logoY, logoWidth, logoHeight);
+  
+  // Texto "CuraPé" ao lado da logo
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(18);
+  doc.setTextColor(...black);
+  const textX = logoX + logoWidth + 10; 
+  const textY = logoY + (logoHeight / 2) + 5; 
+  doc.text("CuraPé", textX, textY);
+  
+  // Linha divisória abaixo do cabeçalho
+  y = logoY + logoHeight + 20; 
+  doc.setLineWidth(0.5);
+  doc.setDrawColor(...gray);
+  doc.line(margin, y, pageWidth - margin, y);
+  y += 30;
 
-  doc.setFont("times", "bold");
-  doc.setFontSize(26);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(15);
   doc.setTextColor(...black);
   doc.text("Indicação Terapêutica Manipulada", pageWidth / 2, y, { align: "center" });
+  y += 6;
 
   y += 15;
   doc.setLineWidth(0.5);
@@ -92,40 +120,45 @@ const FormularioPrescricaoPD = () => {
   doc.line(margin, y, pageWidth - margin, y);
 
   y += 30;
-  doc.setFont("times", "normal");
+  doc.setFont("helvetica", "bold");
   doc.setFontSize(12);
   doc.text(`Profissional: ${formData.podiatristName}`, margin, y);
   y += 20;
 
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9);
+  doc.text("Solicito ao farmacêutico responsável, a manipulação da seguinte indicação terapêutica para:", margin, y);
+  y += 15;
+ 
   doc.text(`Paciente: ${formData.patientName || "_________________________"}`, margin, y);
   y += 30;
 
-  doc.setFont("times", "bold");
+  doc.setFont("helvetica", "bold");
   doc.text("Indicação terapêutica:", margin, y);
   y += 20;
 
-  doc.setFont("times", "normal");
+  doc.setFont("helvetica", "bold");
   formData.ingredients.forEach((ingredient) => {
     doc.text(`• ${ingredient.name || "-"} - ${ingredient.concentration || "-"}`, margin + 10, y);
     y += 20;
   });
 
   y += 10;
-  doc.setFont("times", "bold");
+  doc.setFont("helvetica", "bold");
   doc.text("Modo de usar:", margin, y);
   y += 20;
 
-  doc.setFont("times", "normal");
+  doc.setFont("helvetica", "normal");
   const usageLines = doc.splitTextToSize(formData.usageInstructions || "-", pageWidth - margin * 2);
   doc.text(usageLines, margin, y);
   y += usageLines.length * 15;
 
   y += 30;
-  doc.setFont("times", "bold");
+  doc.setFont("helvetica", "bold");
   doc.text("Local e data:", margin, y);
   y += 20;
 
-  doc.setFont("times", "normal");
+  doc.setFont("helvetica", "normal");
   doc.text(`Local: ${formData.location || "________________"}`, margin, y);
   y += 20;
   doc.text(`Data: ${formData.date || "____/____/______"}`, margin, y);
@@ -135,17 +168,18 @@ const FormularioPrescricaoPD = () => {
   const xStart = (pageWidth - lineWidth) / 2;
   doc.line(xStart, y, xStart + lineWidth, y);
   y += 15;
-  doc.setFont("times", "italic");
+  doc.setFont("helvetica", "bold");
   doc.setFontSize(11);
   doc.text("(Assinatura do Profissional)", pageWidth / 2, y, { align: "center" });
 
   y += 40;
-  doc.setFont("times", "bold");
+  doc.setFont("helvetica", "bold");
   doc.setFontSize(12);
   doc.text("Contato:", margin, y);
   y += 20;
 
-  doc.setFont("times", "normal");
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(9)
   doc.text(`Telefone: ${formData.contact.phone || "-"}`, margin, y);
   y += 15;
   doc.text(`Email: ${formData.contact.email || "-"}`, margin, y);
@@ -221,14 +255,14 @@ const FormularioPrescricaoPD = () => {
       <div className="divider"></div>
 
       <div className="location-date-section">
-        <input disabled
+        <input abileted
           type="text"
           name="location"
           value={formData.location}
           onChange={handleInputChange}
           className="input-medium"
         />
-        <input disabled
+        <input abileted
           type="text"
           name="date"
           value={formData.date}
@@ -241,7 +275,7 @@ const FormularioPrescricaoPD = () => {
 
       <div className="contact-section">
         <h3 className="section-title">
-          <input disabled
+          <input abileted
             type="text"
             value={formData.podiatristName.replace("Podóloga ", "")}
             onChange={handleNameOnlyChange}
@@ -251,28 +285,28 @@ const FormularioPrescricaoPD = () => {
         </h3>
 
         <div className="contact-info">
-          <input disabled
+          <input abileted
             type="text"
             value={formData.contact.phone}
             onChange={(e) => handleContactChange('phone', e.target.value)}
             placeholder="Telefone"
             className="input-medium"
           />
-          <input disabled
+          <input abileted
             type="text"
             value={formData.contact.email}
             onChange={(e) => handleContactChange('email', e.target.value)}
             placeholder="Email"
             className="input-medium"
           />
-          <input disabled
+          <input abileted
             type="text"
             value={formData.contact.instagram}
             onChange={(e) => handleContactChange('instagram', e.target.value)}
             placeholder="Instagram"
             className="input-medium"
           />
-          <input disabled
+          <input abileted
             type="text"
             value={formData.contact.facebook}
             onChange={(e) => handleContactChange('facebook', e.target.value)}
