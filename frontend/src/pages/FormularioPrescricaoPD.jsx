@@ -6,20 +6,19 @@ import '../componentes/css/FormularioPrescricaoPD.css';
 
 const FormularioPrescricaoPD = () => {
   const [formData, setFormData] = useState({
-    podiatristName: "Cristiane Barbosa",
+    podiatristName: "",
+    categoriaName: "Podóloga",
+    nccName: "",
     patientName: "",
-    ingredients: [
-      { name: "Hexatrate", concentration: "5%" },
-      { name: "Cloridrato de alumínio", concentration: "10%" },
-    ],
-    usageInstructions: "De 2 a 4 vezes por dia, borrifar nas areas em tratamento.",
-    location: "Mogi Mirim",
-    date: "13 de setembro de 2024",
+    ingredients: [],
+    usageInstructions: "",
+    location: "",
+    date: "",
     contact: {
-      phone: "(19) 98985-0700",
-      email: "cristianebarbosa.podologa@gmail.com",
-      instagram: "@cb.podologia",
-      facebook: "cb.podologia"
+      phone: "",
+      email: "",
+      instagram: "",
+      facebook: ""
     }
   });
 
@@ -69,7 +68,7 @@ const FormularioPrescricaoPD = () => {
     const value = e.target.value;
     setFormData(prev => ({
       ...prev,
-      podiatristName: `Podóloga ${value}`
+      podiatristName: ` ${value}`
     }));
   };
 
@@ -84,16 +83,13 @@ const FormularioPrescricaoPD = () => {
   const black = [0, 0, 0];
   const gray = [100, 100, 100];
   
-  // Cabeçalho com logo e nome
   const logoWidth = 40; 
   const logoHeight = 40; 
   const logoX = margin;
   const logoY = 30;
   
-  // Adiciona a logo
   doc.addImage(logo, "PNG", logoX, logoY, logoWidth, logoHeight);
   
-  // Texto "CuraPé" ao lado da logo
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
   doc.setTextColor(...black);
@@ -101,7 +97,6 @@ const FormularioPrescricaoPD = () => {
   const textY = logoY + (logoHeight / 2) + 5; 
   doc.text("CuraPé", textX, textY);
   
-  // Linha divisória abaixo do cabeçalho
   y = logoY + logoHeight + 20; 
   doc.setLineWidth(0.5);
   doc.setDrawColor(...gray);
@@ -122,20 +117,20 @@ const FormularioPrescricaoPD = () => {
   y += 30;
   doc.setFont("helvetica", "bold");
   doc.setFontSize(12);
-  doc.text(`Profissional: ${formData.podiatristName}`, margin, y);
+  doc.text(`Paciente:  ${formData.patientName || "_________________________"}`, margin, y);
   y += 20;
 
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(9);
-  doc.text("Solicito ao farmacêutico responsável, a manipulação da seguinte indicação terapêutica para:", margin, y);
-  y += 15;
- 
-  doc.text(`Paciente: ${formData.patientName || "_________________________"}`, margin, y);
-  y += 30;
+doc.setFontSize(9);
 
-  doc.setFont("helvetica", "bold");
-  doc.text("Indicação terapêutica:", margin, y);
-  y += 20;
+doc.text("Solicito ao farmacêutico responsável, a manipulação da seguinte indicação terapêutica", margin, y);
+y += 10; 
+doc.text("para o paciente acima:", margin, y);
+y += 30; 
+
+doc.setFont("helvetica", "bold");
+doc.text("Indicação terapêutica:", margin, y);
+y += 15; 
 
   doc.setFont("helvetica", "bold");
   formData.ingredients.forEach((ingredient) => {
@@ -164,15 +159,28 @@ const FormularioPrescricaoPD = () => {
   doc.text(`Data: ${formData.date || "____/____/______"}`, margin, y);
   y += 40;
 
-  const lineWidth = 200;
-  const xStart = (pageWidth - lineWidth) / 2;
-  doc.line(xStart, y, xStart + lineWidth, y);
-  y += 15;
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(11);
-  doc.text("(Assinatura do Profissional)", pageWidth / 2, y, { align: "center" });
 
-  y += 40;
+const lineWidth = 200;
+const xStart = (pageWidth - lineWidth) / 2;
+doc.line(xStart, y, xStart + lineWidth, y);
+y += 15; 
+doc.setFont("helvetica", "bold");
+doc.setFontSize(11);
+doc.text(` ${formData.podiatristName || "_________________________"}`, pageWidth / 2, y, { align: "center" });
+y += 15; 
+
+
+doc.setFont("helvetica", "bold");
+doc.setFontSize(11);
+doc.text(` ${formData.categoriaName || "_________________________"}`, pageWidth / 2, y, { align: "center" });
+y += 15; 
+
+doc.setFont("helvetica", "bold");
+doc.setFontSize(11);
+doc.text(` ${formData.nccName || "_________________________"}`, pageWidth / 2, y, { align: "center" });
+y += 15; 
+
+  y += 20;
   doc.setFont("helvetica", "bold");
   doc.setFontSize(12);
   doc.text("Contato:", margin, y);
@@ -196,12 +204,30 @@ const FormularioPrescricaoPD = () => {
   return (
     <div className="prescription-form">
       <div className="form-header">
-        <input
+        <input 
           type="text"
           name="podiatristName"
           value={formData.podiatristName}
           onChange={handleInputChange}
           className="input-large"
+          placeholder='Nome profissional'
+        />
+        <input 
+          type="text"
+          name="nccName"
+          value={formData.nccName}
+          onChange={handleInputChange}
+          className="input-large"
+          placeholder='N° concelho de classe'
+        />
+        
+        <input disabled
+          type="text"
+          name="categoriaName"
+          value={formData.categoriaName}
+          onChange={handleInputChange}
+          className="input-large"
+          placeholder="Categoria profissional"
         />
       </div>
 
@@ -213,6 +239,8 @@ const FormularioPrescricaoPD = () => {
           value={formData.patientName}
           onChange={handleInputChange}
           className="input-medium"
+          placeholder='Nome do paciente'
+
         />
       </div>
 
@@ -249,6 +277,8 @@ const FormularioPrescricaoPD = () => {
           value={formData.usageInstructions}
           onChange={handleInputChange}
           className="textarea-large"
+          placeholder='Descreva o modo de usar'
+
         />
       </div>
 
@@ -261,6 +291,8 @@ const FormularioPrescricaoPD = () => {
           value={formData.location}
           onChange={handleInputChange}
           className="input-medium"
+          placeholder='Local de atendimento'
+
         />
         <input abileted
           type="text"
@@ -268,6 +300,8 @@ const FormularioPrescricaoPD = () => {
           value={formData.date}
           onChange={handleInputChange}
           className="input-medium"
+          placeholder='Data'
+
         />
       </div>
 
