@@ -6,3 +6,5 @@ npm install express mysql2 cors body-parser
 npm install axios
 npm install react-router-dom
 npm start
+grant all privileges on curape.* to 'alexsandro31'@'localhost' identified by 'curape123';
+flush privileges

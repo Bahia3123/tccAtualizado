@@ -136,7 +136,7 @@ export default function HistoricoPodologo() {
   // Configuração da tabela
   doc.autoTable({
     head: [
-      ["Nome", "CPF/RG", "Nascimento", "Idade", "Telefone", "E-mail", "Status", "Cadastro"]
+      ["Nome", "CPF/RG", "Nascimento", "Idade", "Telefone", "E-mail", "Status",]
     ],
     body: tableData.map(paciente => [
       paciente.nome,

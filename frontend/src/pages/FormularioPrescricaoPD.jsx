@@ -64,18 +64,18 @@ const FormularioPrescricaoPD = () => {
     }));
   };
 
-  const handleNameOnlyChange = (e) => {
-    const value = e.target.value;
-    setFormData(prev => ({
-      ...prev,
-      podiatristName: ` ${value}`
-    }));
-  };
+  
 
   const generatePDF = () => {
   const doc = new jsPDF('p', 'pt', 'A4');
   const pageWidth = doc.internal.pageSize.getWidth();
-  const pageHeight = doc.internal.pageSize.getHeight();
+   
+
+
+
+
+
+  
 
   const margin = 40;
   let y = 60;
@@ -196,7 +196,7 @@ y += 15;
   y += 15;
   doc.text(`Facebook: ${formData.contact.facebook || "-"}`, margin, y);
 
-  doc.save("receituario_podologico.pdf");
+  doc.save(formData.patientName);
 };
 
 

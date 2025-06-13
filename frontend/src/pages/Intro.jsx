@@ -61,13 +61,13 @@ const PaginaInicial = () => {
           <nav className="login-container" aria-label="Área de Login">
             <h2>Login</h2>
            
-            <a
+            <button
               onClick={() => setShowPodologoModal(true)}
               className="login-btn"
               style={{ cursor: 'pointer' }}
             >
               Podólogo
-            </a>
+            </button>
           </nav>
         </header>
       </div>
