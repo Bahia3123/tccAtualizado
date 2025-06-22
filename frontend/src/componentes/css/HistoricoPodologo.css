@@ -1,5 +1,68 @@
 /* Container principal */
 
+.prescriptions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 10px;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+.prescription-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f2f2f2;
+  padding: 10px 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  width: 100%;
+}
+
+.prescription-name {
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
+}
+
+.prescription-button {
+  padding: 6px 12px;
+  background-color: #00796b;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.prescription-button:hover {
+  background-color: #2ecc71;
+}
+
+ .btn-download {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #2bb342;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 4px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100px;
+}
+
+.btn-download:hover {
+  background-color: #2bb342;
+}
+
+.btn-download .icon {
+  font-size: 16px;
+}
+
 
 .patient-details-card {
   background: #ffffff;

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react"; // ADICIONEI useEffect para buscar prescrições
 import { useUser } from "../context/userContext";  // Usando useUser para acessar o contexto
 import { useHistory } from "../context/historyContext";  // Mantendo o HistoryContext para o restante
 import { NavLink } from 'react-router-dom';
@@ -16,9 +16,37 @@ export default function HistoricoPodologo() {
   const [filterStatus, setFilterStatus] = useState("todos");
   const [showSuccess, setShowSuccess] = useState("");
   const { historico, inativarPaciente, excluirPaciente } = useHistory();
-  const {user} = useUser();
+  const { user } = useUser();
 
-  
+  // ----------- NOVO: Estados para prescrições -----------
+  const [prescriptions, setPrescriptions] = useState([]);
+  const [loadingPrescriptions, setLoadingPrescriptions] = useState(false);
+  const [errorPrescriptions, setErrorPrescriptions] = useState(null);
+
+  // Função para buscar prescrições no backend
+  const fetchPrescriptions = async () => {
+    setLoadingPrescriptions(true);
+    try {
+      const res = await fetch("http://localhost:3001/pdfs"); // Ajuste a URL do backend conforme seu endpoint
+      if (!res.ok) throw new Error("Erro ao carregar prescrições");
+      const data = await res.json();
+      setPrescriptions(data);
+      setErrorPrescriptions(null);
+    } catch (error) {
+      setErrorPrescriptions(error.message);
+    } finally {
+      setLoadingPrescriptions(false);
+    }
+  };
+
+  // Buscar prescrições quando a aba mudar para 'prescriptions'
+  useEffect(() => {
+    if (activeTab === "prescriptions") {
+      fetchPrescriptions();
+    }
+  }, [activeTab]);
+
+  // ---------------------------------------
 
   const calcularIdade = (dataNascimento) => {
     if (!dataNascimento) return 0;
@@ -35,7 +63,6 @@ export default function HistoricoPodologo() {
   const toggleExpand = (cpf) => {
     setExpandedPatient(prev => prev === cpf ? null : cpf);
   };
-
 
   const handleInativarPaciente = (cpf) => {
     if (window.confirm('Tem certeza que deseja marcar este paciente como inativo?')) {
@@ -74,164 +101,169 @@ export default function HistoricoPodologo() {
   };
 
   const generatePatientHistoryPDF = () => {
-  if (filteredPacientes.length === 0) {
-    alert("Nenhum paciente para exportar!");
-    return;
-  }
-
-  const doc = new jsPDF('p', 'pt', 'A4');
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const margin = 40;
-  let y = 60;
-
-  // Cores
-  const black = [0, 0, 0];
-  const gray = [100, 100, 100];
-  const primaryColor = [0, 105, 92]; // Verde profissional
-
-  // Cabeçalho com logo e nome
-  const logoWidth = 40;
-  const logoHeight = 40;
-  const logoX = margin;
-  const logoY = 30;
-  
-  // Adiciona a logo
-  if (logo) {
-    doc.addImage(logo, "PNG", logoX, logoY, logoWidth, logoHeight);
-  }
-  
-  // Texto "CuraPé" alinhado com a logo
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(18);
-  doc.setTextColor(...primaryColor);
-  const textX = logoX + logoWidth + 10;
-  const textY = logoY + (logoHeight / 2) + 5;
-  doc.text("CuraPé", textX, textY);
-
-  // Título principal centralizado
-  y = logoY + logoHeight + 40;
-  doc.setFontSize(20);
-  doc.setTextColor(...black);
-  doc.text("Histórico de Pacientes", pageWidth / 2, y, { align: "center" });
-  y += 40;
-
-  // Linha divisória
-  doc.setLineWidth(0.5);
-  doc.setDrawColor(...gray);
-  doc.line(margin, y, pageWidth - margin, y);
-  y += 30;
-
-  // Preparar dados para a tabela
-  const tableData = filteredPacientes.map(paciente => ({
-    nome: paciente.nome || "-",
-    documento: paciente.cpf_rg || "-",
-    nascimento: paciente.data_nascimento || "-",
-    idade: calcularIdade(paciente.data_nascimento) + " anos" || "-",
-    telefone: paciente.telefone || "-",
-    email: paciente.email || "-",
-    status: paciente.status === 'ativo' ? 'Ativo' : 'Inativo',
-    cadastro: new Date(paciente.data_cadastro).toLocaleString() || "-"
-  }));
-
-  // Configuração da tabela
-  doc.autoTable({
-    head: [
-      ["Nome", "CPF/RG", "Nascimento", "Idade", "Telefone", "E-mail", "Status",]
-    ],
-    body: tableData.map(paciente => [
-      paciente.nome,
-      paciente.documento,
-      paciente.nascimento,
-      paciente.idade,
-      paciente.telefone,
-      paciente.email,
-      paciente.status,
-      paciente.cadastro
-    ]),
-    startY: y,
-    headStyles: {
-      fillColor: primaryColor,
-      textColor: 255,
-      fontStyle: 'bold'
-    },
-    alternateRowStyles: {
-      fillColor: [232, 245, 233]
-    },
-    margin: { left: margin, right: margin },
-    styles: {
-      fontSize: 8,
-      cellPadding: 4,
-      overflow: 'linebreak'
-    },
-    columnStyles: {
-      0: { cellWidth: 'auto' }, // Nome
-      1: { cellWidth: 'auto' }, // CPF/RG
-      2: { cellWidth: 'auto' }, // Nascimento
-      3: { cellWidth: 'auto' }, // Idade
-      4: { cellWidth: 'auto' }, // Telefone
-      5: { cellWidth: 'auto' }, // Email
-      6: { cellWidth: 'auto' }, // Status
-      7: { cellWidth: 'auto' }  // Cadastro
+    if (filteredPacientes.length === 0) {
+      alert("Nenhum paciente para exportar!");
+      return;
     }
-  });
 
-  // Data de emissão no rodapé
-  const finalY = doc.lastAutoTable.finalY || y + 200;
-  doc.setFontSize(10);
-  doc.setTextColor(...gray);
-  doc.text(`Emitido em: ${new Date().toLocaleString()}`, pageWidth / 2, finalY + 30, { align: "center" });
+    const doc = new jsPDF('p', 'pt', 'A4');
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const margin = 40;
+    let y = 60;
 
-  doc.save("historico_pacientes.pdf");
-};
+    // Cores
+    const black = [0, 0, 0];
+    const gray = [100, 100, 100];
+    const primaryColor = [0, 105, 92]; // Verde profissional
+
+    // Cabeçalho com logo e nome
+    const logoWidth = 40;
+    const logoHeight = 40;
+    const logoX = margin;
+    const logoY = 30;
+
+    // Adiciona a logo
+    if (logo) {
+      doc.addImage(logo, "PNG", logoX, logoY, logoWidth, logoHeight);
+    }
+
+    // Texto "CuraPé" alinhado com a logo
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(18);
+    doc.setTextColor(...primaryColor);
+    const textX = logoX + logoWidth + 10;
+    const textY = logoY + (logoHeight / 2) + 5;
+    doc.text("CuraPé", textX, textY);
+
+    // Título principal centralizado
+    y = logoY + logoHeight + 40;
+    doc.setFontSize(20);
+    doc.setTextColor(...black);
+    doc.text("Histórico de Pacientes", pageWidth / 2, y, { align: "center" });
+    y += 40;
+
+    // Linha divisória
+    doc.setLineWidth(0.5);
+    doc.setDrawColor(...gray);
+    doc.line(margin, y, pageWidth - margin, y);
+    y += 30;
+
+    // Preparar dados para a tabela
+    const tableData = filteredPacientes.map(paciente => ({
+      nome: paciente.nome || "-",
+      documento: paciente.cpf_rg || "-",
+      nascimento: paciente.data_nascimento || "-",
+      idade: calcularIdade(paciente.data_nascimento) + " anos" || "-",
+      telefone: paciente.telefone || "-",
+      email: paciente.email || "-",
+      status: paciente.status === 'ativo' ? 'Ativo' : 'Inativo',
+      cadastro: new Date(paciente.data_cadastro).toLocaleString() || "-"
+    }));
+
+    // Configuração da tabela
+    doc.autoTable({
+      head: [
+        ["Nome", "CPF/RG", "Nascimento", "Idade", "Telefone", "E-mail", "Status",]
+      ],
+      body: tableData.map(paciente => [
+        paciente.nome,
+        paciente.documento,
+        paciente.nascimento,
+        paciente.idade,
+        paciente.telefone,
+        paciente.email,
+        paciente.status,
+        paciente.cadastro
+      ]),
+      startY: y,
+      headStyles: {
+        fillColor: primaryColor,
+        textColor: 255,
+        fontStyle: 'bold'
+      },
+      alternateRowStyles: {
+        fillColor: [232, 245, 233]
+      },
+      margin: { left: margin, right: margin },
+      styles: {
+        fontSize: 8,
+        cellPadding: 4,
+        overflow: 'linebreak'
+      },
+      columnStyles: {
+        0: { cellWidth: 'auto' }, // Nome
+        1: { cellWidth: 'auto' }, // CPF/RG
+        2: { cellWidth: 'auto' }, // Nascimento
+        3: { cellWidth: 'auto' }, // Idade
+        4: { cellWidth: 'auto' }, // Telefone
+        5: { cellWidth: 'auto' }, // Email
+        6: { cellWidth: 'auto' }, // Status
+        7: { cellWidth: 'auto' }  // Cadastro
+      }
+    });
+
+    // Data de emissão no rodapé
+    const finalY = doc.lastAutoTable.finalY || y + 200;
+    doc.setFontSize(10);
+    doc.setTextColor(...gray);
+    doc.text(`Emitido em: ${new Date().toLocaleString()}`, pageWidth / 2, finalY + 30, { align: "center" });
+
+    doc.save("historico_pacientes.pdf");
+  };
+
+  // Função para abrir download do PDF em nova aba
+  const handleDownloadPrescription = (url) => {
+    window.open(`http://localhost:3001${url}`, "_blank"); // Ajuste a base URL conforme sua API
+  };
 
   return (
     <div id="historico-principal">
-    <div className="historico-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-      <header className="header-Historico" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
-        
-        <div className="container_header-content">
-          <div className="header-left">
-                      <img
-                        src={logo}
-                        alt=""
-                        style={{
-                          width: '65px',
-                          height: '65px',
-                          objectFit: 'cover',
-                          borderRadius: '30px',
-                        }}
-                      />
-                      <div className="logo" aria-label="Logo do site de Podologia">
-                        CuraPé
-                      </div>
-                      
-                    </div>
+      <div className="historico-container" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+        <header className="header-Historico" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
 
-          <div className="user-menu">
-            <div className="user-info">
-              <div className="user-name">{user?.nome ? `Dr(a). ${user.nome}` : "Usuário"}</div>
-              <div className="user-role">Podólogo</div>
+          <div className="container_header-content">
+            <div className="header-left">
+              <img
+                src={logo}
+                alt=""
+                style={{
+                  width: '65px',
+                  height: '65px',
+                  objectFit: 'cover',
+                  borderRadius: '30px',
+                }}
+              />
+              <div className="logo" aria-label="Logo do site de Podologia">
+                CuraPé
+              </div>
+
             </div>
-            <div className="user-avatar">
-              {user?.nome ? user.nome.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2) : "??"}
+
+            <div className="user-menu">
+              <div className="user-info">
+                <div className="user-name">{user?.nome ? `Dr(a). ${user.nome}` : "Usuário"}</div>
+                <div className="user-role">Podólogo</div>
+              </div>
+              <div className="user-avatar">
+                {user?.nome ? user.nome.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2) : "??"}
+              </div>
             </div>
           </div>
-        </div>
-      </header>
+        </header>
 
-      <div className="dashboard container">
-        <motion.aside
-          className="sidebar"
-          initial={{ x: -50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
-        >
-          <nav>
-             <NavLink
+        <div className="dashboard container">
+          <motion.aside
+            className="sidebar"
+            initial={{ x: -50, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <nav>
+              <NavLink
                 to="/PainelPodologo"
                 className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
               >
-                   <span className="icon">🏠</span>
+                <span className="icon">🏠</span>
                 <span>Home</span>
               </NavLink>
 
@@ -239,7 +271,7 @@ export default function HistoricoPodologo() {
                 to="/Formulario"
                 className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`}
               >
-                   <span className="icon">⚠️</span>
+                <span className="icon">⚠️</span>
                 <span>Atendimento</span>
               </NavLink>
 
@@ -266,135 +298,155 @@ export default function HistoricoPodologo() {
                 <span className="icon">📄</span>
                 <span>Prescrição</span>
               </NavLink>
-          </nav>
-        </motion.aside>
+            </nav>
+          </motion.aside>
 
-        <motion.main
-          className="main-content"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          {showSuccess && (
-            <div className="success-message">
-              {showSuccess}
-            </div>
-          )}
-
-          <div className="page-header">
-            <h2 className="page-title">Histórico Pacientes</h2>
-            <button className="btn" onClick={generatePatientHistoryPDF}>⬇ Exportar PDF</button>
-          </div>
-
-          <div className="search-filter">
-            <input
-              type="text"
-              className="search-input"
-              placeholder="Pesquisar por nome, CPF, telefone ou e-mail..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <select
-              className="filter-select"
-              value={filterStatus}
-              onChange={(e) => setFilterStatus(e.target.value)}
-            >
-              <option value="todos">Todos</option>
-              <option value="ativo">Ativos</option>
-              <option value="inativo">Inativos</option>
-            </select>
-            <select
-              className="filter-select"
-              value={sortOrder}
-              onChange={(e) => setSortOrder(e.target.value)}
-            >
-              <option value="asc">Ordenar A-Z</option>
-              <option value="desc">Ordenar Z-A</option>
-            </select>
-          </div>
-
-          <div className="history-tabs">
-            {["patients", "prescriptions"].map((tab) => (
-              <div
-                key={tab}
-                className={`tab ${activeTab === tab ? "active" : ""}`}
-                onClick={() => handleTabClick(tab)}
-              >
-                {tab === "patients" && "Pacientes"}
-                {tab === "prescriptions" && "Prescrições"}
+          <motion.main
+            className="main-content"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            {showSuccess && (
+              <div className="success-message">
+                {showSuccess}
               </div>
-            ))}
-          </div>
-
-          <div className="history-content">
-            {activeTab === "patients" && filteredPacientes.length > 0 ? (
-              filteredPacientes.map((paciente) => (
-                <div
-                  key={paciente.cpf_rg}
-                  className={`patient-details-card ${expandedPatient === paciente.cpf_rg ? "expanded" : ""} ${paciente.status === 'inativo' ? 'inactive' : ''}`}
-                >
-                  <div className="card-header">
-                    <h2 dangerouslySetInnerHTML={{ __html: highlightText(paciente.nome) }} />
-                    {paciente.status === 'inativo' && <span className="inactive-badge">INATIVO</span>}
-                    <div className="card-actions">
-                      <button
-                        className="expand-btn"
-                        onClick={() => toggleExpand(paciente.cpf_rg)}
-                      >
-                        {expandedPatient === paciente.cpf_rg ? "Recolher ▲" : "Expandir ▼"}
-                      </button>
-                      {paciente.status === 'ativo' ? (
-                        <button
-                          className="inactive-btn"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleInativarPaciente(paciente.cpf_rg);
-                          }}
-                        >
-                          Inativar
-                        </button>
-                      ) : (
-                        <button
-                          className="delete-permanent-btn"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleExcluirPaciente(paciente.cpf_rg);
-                          }}
-                        >
-                          Excluir
-                        </button>
-                      )}
-                    </div>
-                  </div>
-
-                  <AnimatePresence>
-                    {expandedPatient === paciente.cpf_rg && (
-                      <motion.div
-                        className="patient-info-grid compact"
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.3, ease: "easeInOut" }}
-                      >
-                        {Object.entries(paciente).map(([key, value]) => (
-                          key !== "nome" && key !== "cpf_rg" && key !== "status" && (
-                            <div className="patient-info-line" key={key}>
-                              <strong>{key.replace(/_/g, " ")}:</strong> {value}
-                            </div>
-                          )
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))
-            ) : (
-              <p>Nenhum paciente encontrado.</p>
             )}
-          </div>
-        </motion.main>
+
+            <div className="page-header">
+              <h2 className="page-title">Histórico Pacientes</h2>
+              <button className="btn" onClick={generatePatientHistoryPDF}>⬇ Exportar PDF</button>
+            </div>
+
+            <div className="search-filter">
+              <input
+                type="text"
+                className="search-input"
+                placeholder="Pesquisar por nome, CPF, telefone ou e-mail..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+              <select
+                className="filter-select"
+                value={filterStatus}
+                onChange={(e) => setFilterStatus(e.target.value)}
+              >
+                <option value="todos">Todos</option>
+                <option value="ativo">Ativos</option>
+                <option value="inativo">Inativos</option>
+              </select>
+              <select
+                className="filter-select"
+                value={sortOrder}
+                onChange={(e) => setSortOrder(e.target.value)}
+              >
+                <option value="asc">Ordenar A-Z</option>
+                <option value="desc">Ordenar Z-A</option>
+              </select>
+            </div>
+
+            <div className="history-tabs">
+              {["patients", "prescriptions"].map((tab) => (
+                <div
+                  key={tab}
+                  className={`tab ${activeTab === tab ? "active" : ""}`}
+                  onClick={() => handleTabClick(tab)}
+                >
+                  {tab === "patients" && "Pacientes"}
+                  {tab === "prescriptions" && "Prescrições"}
+                </div>
+              ))}
+            </div>
+
+            <div className="history-content">
+              {activeTab === "patients" && filteredPacientes.length > 0 ? (
+                filteredPacientes.map((paciente) => (
+                  <div
+                    key={paciente.cpf_rg}
+                    className={`patient-details-card ${expandedPatient === paciente.cpf_rg ? "expanded" : ""} ${paciente.status === 'inativo' ? 'inactive' : ''}`}
+                  >
+                    <div className="card-header">
+                      <h2 dangerouslySetInnerHTML={{ __html: highlightText(paciente.nome) }} />
+                      {paciente.status === 'inativo' && <span className="inactive-badge">INATIVO</span>}
+                      <div className="card-actions">
+                        <button
+                          className="expand-btn"
+                          onClick={() => toggleExpand(paciente.cpf_rg)}
+                        >
+                          {expandedPatient === paciente.cpf_rg ? "Recolher ▲" : "Expandir ▼"}
+                        </button>
+                        {paciente.status === 'ativo' ? (
+                          <button
+                            className="inactive-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleInativarPaciente(paciente.cpf_rg);
+                            }}
+                          >
+                            Inativar
+                          </button>
+                        ) : (
+                          <button
+                            className="delete-permanent-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleExcluirPaciente(paciente.cpf_rg);
+                            }}
+                          >
+                            Excluir
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    <AnimatePresence>
+                      {expandedPatient === paciente.cpf_rg && (
+                        <motion.div
+                          className="patient-info-grid compact"
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: "auto" }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.3, ease: "easeInOut" }}
+                        >
+                          {Object.entries(paciente).map(([key, value]) => (
+                            key !== "nome" && key !== "cpf_rg" && key !== "status" && (
+                              <div className="patient-info-line" key={key}>
+                                <strong>{key.replace(/_/g, " ")}:</strong> {value}
+                              </div>
+                            )
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ))
+              ) : activeTab === "prescriptions" ? (
+                <div>
+                  {loadingPrescriptions && <p>Carregando prescrições...</p>}
+                  {errorPrescriptions && <p style={{ color: "red" }}>Erro: {errorPrescriptions}</p>}
+                  {!loadingPrescriptions && prescriptions.length === 0 && <p>Nenhuma prescrição encontrada.</p>}
+                  <ul className="prescriptions-list">
+                    {prescriptions.map((presc) => (
+                      <li key={presc.filename} className="prescription-item">
+                        <span>📄 {presc.filename}</span>
+                        <button
+                          className="btn-download"
+                          onClick={() => handleDownloadPrescription(presc.url)}
+                        >
+                          <span className="icon">⬇</span> Baixar
+                        </button>
+
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : (
+                <p>Nenhum paciente encontrado.</p>
+              )}
+            </div>
+          </motion.main>
+        </div>
       </div>
-    </div>
     </div>
   );
 }

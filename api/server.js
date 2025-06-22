@@ -1,10 +1,78 @@
 const express = require("express");
 const cors = require("cors");
 const db = require("./database");
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+// CONFIGURAÇÃO DO STORAGE
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const dir = path.join(__dirname, 'pdfs');
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
+    }
+    cb(null, dir);
+  },
+  filename: (req, file, cb) => {
+  let originalName = file.originalname || 'prescricao.pdf';
+
+  // Se quiser pegar o nome do paciente de req.body:
+  if (req.body.patientName) {
+    // Remove acentos, espaços e caracteres especiais
+    const cleanName = req.body.patientName
+      .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, "_")
+      .replace(/[^\w\-]/g, "");
+
+    originalName = `${cleanName}.pdf`;
+  }
+
+  cb(null, originalName);
+}
+})
+// DECLARAÇÃO DO upload
+const upload = multer({ storage });
+
+// ✅ AGORA você pode usar upload aqui:
+app.post('/upload-pdf', upload.single('pdf'), (req, res) => {
+  if (!req.file) return res.status(400).json({ error: "Arquivo não enviado" });
+  return res.json({
+    filename: req.file.filename,
+    patientName: req.body.patientName,
+    filePath: `/pdfs/${req.file.filename}`
+  });
+});
+
+app.get('/pdfs', (req, res) => {
+  const pdfDir = path.join(__dirname, 'pdfs');
+
+  if (!fs.existsSync(pdfDir)) {
+    return res.json([]);
+  }
+
+  fs.readdir(pdfDir, (err, files) => {
+    if (err) {
+      console.error('Erro ao ler diretório de PDFs:', err);
+      return res.status(500).json({ error: 'Erro ao listar os PDFs.' });
+    }
+
+    const list = files
+      .filter(file => file.endsWith('.pdf'))
+      .map(file => ({
+        filename: file,
+        patientName: decodeURIComponent(file.split('-').slice(1).join('-').replace('.pdf', '')),
+        url: `/pdfs/${file}`
+      }));
+
+    res.json(list);
+  });
+});
+
 
 // Rota para cadastrar podólogo
 app.post("/CadastroPodologo", (req, res) => {
@@ -72,6 +140,27 @@ app.get('/PacienteList', (req, res) => {
     res.status(200).json(results); // Envia a lista de pacientes como JSON
   });
 });
+
+app.use('/pdfs', express.static(path.join(__dirname, 'pdfs')));
+
+
+
+app.get("/PodologoDados", async (req, res) => {
+  try {
+    db.query("SELECT nome, ncc, consultorio, telefone, email FROM registro_podologo LIMIT 1", (err, results) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).json({ error: "Erro ao buscar dados" });
+      }
+      res.json(results[0]);
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Erro ao buscar dados" });
+  }
+});
+
+
 
 
 

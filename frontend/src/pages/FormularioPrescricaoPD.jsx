@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Apenas uma importação do React
+import axios from 'axios'; // Importando o Axios
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import logo from "../assets/img/logo-curape.png";
@@ -21,6 +22,32 @@ const FormularioPrescricaoPD = () => {
       facebook: ""
     }
   });
+
+  // Função para buscar dados do banco de dados
+  const fetchData = async () => {
+  try {
+    const response = await axios.get('http://localhost:3001/PodologoDados?id=3');
+    const { nome, ncc, consultorio, email, telefone } = response.data;
+
+    setFormData(prev => ({
+      ...prev,
+      podiatristName: nome,
+      nccName: ncc,
+      location: consultorio,
+      contact: {
+        ...prev.contact,
+        phone: telefone,
+        email: email
+      }
+    }));
+  } catch (error) {
+    console.error("Erro ao buscar dados do podólogo:", error);
+  }
+};
+
+  useEffect(() => {
+    fetchData(); // Chama a função para buscar os dados ao montar o componente
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -64,40 +91,30 @@ const FormularioPrescricaoPD = () => {
     }));
   };
 
-  
-
-  const generatePDF = () => {
+  const generatePDF = async () => {
   const doc = new jsPDF('p', 'pt', 'A4');
   const pageWidth = doc.internal.pageSize.getWidth();
-   
-
-
-
-
-
-  
-
   const margin = 40;
   let y = 60;
 
   const black = [0, 0, 0];
   const gray = [100, 100, 100];
-  
-  const logoWidth = 40; 
-  const logoHeight = 40; 
+
+  const logoWidth = 40;
+  const logoHeight = 40;
   const logoX = margin;
   const logoY = 30;
-  
+
   doc.addImage(logo, "PNG", logoX, logoY, logoWidth, logoHeight);
-  
+
   doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
   doc.setTextColor(...black);
-  const textX = logoX + logoWidth + 10; 
-  const textY = logoY + (logoHeight / 2) + 5; 
+  const textX = logoX + logoWidth + 10;
+  const textY = logoY + (logoHeight / 2) + 5;
   doc.text("CuraPé", textX, textY);
-  
-  y = logoY + logoHeight + 20; 
+
+  y = logoY + logoHeight + 20;
   doc.setLineWidth(0.5);
   doc.setDrawColor(...gray);
   doc.line(margin, y, pageWidth - margin, y);
@@ -121,16 +138,16 @@ const FormularioPrescricaoPD = () => {
   y += 20;
 
   doc.setFont("helvetica", "normal");
-doc.setFontSize(9);
+  doc.setFontSize(9);
 
-doc.text("Solicito ao farmacêutico responsável, a manipulação da seguinte indicação terapêutica", margin, y);
-y += 10; 
-doc.text("para o paciente acima:", margin, y);
-y += 30; 
+  doc.text("Solicito ao farmacêutico responsável, a manipulação da seguinte indicação terapêutica", margin, y);
+  y += 10;
+  doc.text("para o paciente acima:", margin, y);
+  y += 30;
 
-doc.setFont("helvetica", "bold");
-doc.text("Indicação terapêutica:", margin, y);
-y += 15; 
+  doc.setFont("helvetica", "bold");
+  doc.text("Indicação terapêutica:", margin, y);
+  y += 15;
 
   doc.setFont("helvetica", "bold");
   formData.ingredients.forEach((ingredient) => {
@@ -149,36 +166,30 @@ y += 15;
   y += usageLines.length * 15;
 
   y += 30;
-doc.setFont("helvetica", "bold");
-doc.text("Local e data:", margin, y);
-y += 20;
+  doc.setFont("helvetica", "bold");
+  doc.text("Local e data:", margin, y);
+  y += 20;
 
-doc.setFont("helvetica", "normal");
-// Combina local e data em uma única linha com separador
-const localDataLine = `${formData.location || "________________"}   -   ${formData.date || "__/__/____"}`;
-doc.text(localDataLine, margin, y);
-y += 40;
+  doc.setFont("helvetica", "normal");
+  const localDataLine = `${formData.location || "________________"}   -   ${formData.date || "__/__/____"}`;
+  doc.text(localDataLine, margin, y);
+  y += 40;
 
+  const lineWidth = 200;
+  const xStart = (pageWidth - lineWidth) / 2;
+  doc.line(xStart, y, xStart + lineWidth, y);
+  y += 15;
 
-const lineWidth = 200;
-const xStart = (pageWidth - lineWidth) / 2;
-doc.line(xStart, y, xStart + lineWidth, y);
-y += 15; 
-doc.setFont("helvetica", "bold");
-doc.setFontSize(11);
-doc.text(` ${formData.podiatristName || "_________________________"}`, pageWidth / 2, y, { align: "center" });
-y += 15; 
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(11);
+  doc.text(`${formData.podiatristName || "_________________________"}`, pageWidth / 2, y, { align: "center" });
+  y += 15;
 
+  doc.text(`${formData.categoriaName || "_________________________"}`, pageWidth / 2, y, { align: "center" });
+  y += 15;
 
-doc.setFont("helvetica", "bold");
-doc.setFontSize(11);
-doc.text(` ${formData.categoriaName || "_________________________"}`, pageWidth / 2, y, { align: "center" });
-y += 15; 
-
-doc.setFont("helvetica", "bold");
-doc.setFontSize(11);
-doc.text(` ${formData.nccName || "_________________________"}`, pageWidth / 2, y, { align: "center" });
-y += 15; 
+  doc.text(`${formData.nccName || "_________________________"}`, pageWidth / 2, y, { align: "center" });
+  y += 15;
 
   y += 20;
   doc.setFont("helvetica", "bold");
@@ -187,7 +198,7 @@ y += 15;
   y += 20;
 
   doc.setFont("helvetica", "normal");
-  doc.setFontSize(9)
+  doc.setFontSize(9);
   doc.text(`Telefone: ${formData.contact.phone || "-"}`, margin, y);
   y += 15;
   doc.text(`Email: ${formData.contact.email || "-"}`, margin, y);
@@ -196,15 +207,36 @@ y += 15;
   y += 15;
   doc.text(`Facebook: ${formData.contact.facebook || "-"}`, margin, y);
 
-  doc.save(formData.patientName);
-};
+  doc.save(formData.patientName || "prescricao.pdf");
 
+  // Criar Blob e enviar para o backend
+  const blob = doc.output('blob');
+  const formDataToSend = new FormData();
+  formDataToSend.append('pdf', blob, `${formData.patientName}.pdf`);
+  formDataToSend.append('patientName', formData.patientName);
+
+  try {
+    const response = await fetch('http://localhost:3001/upload-pdf', {
+      method: 'POST',
+      body: formDataToSend
+    });
+
+    if (!response.ok) throw new Error("Falha ao enviar PDF");
+
+    alert("Prescrição salva com sucesso!");
+
+    // Você pode atualizar a lista de prescrições aqui, se quiser
+  } catch (error) {
+    console.error("Erro ao enviar PDF:", error);
+    alert("Erro ao salvar a prescrição.");
+  }
+};
 
 
   return (
     <div className="prescription-form">
       <div className="form-header">
-        <input disabled
+        <input 
           type="text"
           name="podiatristName"
           value={formData.podiatristName}
@@ -212,7 +244,7 @@ y += 15;
           className="input-large"
           placeholder='Nome profissional'
         />
-        <input  disabled
+        <input 
           type="text"
           name="nccName"
           value={formData.nccName}
@@ -221,7 +253,7 @@ y += 15;
           placeholder='N° concelho de classe'
         />
         
-        <input disabled
+        <input 
           type="text"
           name="categoriaName"
           value={formData.categoriaName}
@@ -240,7 +272,6 @@ y += 15;
           onChange={handleInputChange}
           className="input-medium"
           placeholder='Nome do paciente'
-
         />
       </div>
 
@@ -278,63 +309,57 @@ y += 15;
           onChange={handleInputChange}
           className="textarea-large"
           placeholder='Descreva o modo de usar'
-
         />
       </div>
 
       <div className="divider"></div>
 
       <div className="location-date-section">
-        <input abileted
+        <input
           type="text"
           name="location"
           value={formData.location}
           onChange={handleInputChange}
           className="input-medium"
           placeholder="(Cidade)"
-
         />
-        <input abileted
+        <input
           type="text"
           name="date"
           value={formData.date}
           onChange={handleInputChange}
           className="input-medium"
           placeholder='Data'
-
         />
       </div>
 
       <div className="divider"></div>
 
       <div className="contact-section">
-        <h3 className="section-title">
-        
-        </h3>
 
         <div className="contact-info">
-          <input abileted
+          <input
             type="text"
             value={formData.contact.phone}
             onChange={(e) => handleContactChange('phone', e.target.value)}
             placeholder="Telefone"
             className="input-medium"
           />
-          <input abileted
+          <input
             type="text"
             value={formData.contact.email}
             onChange={(e) => handleContactChange('email', e.target.value)}
             placeholder="Email"
             className="input-medium"
           />
-          <input abileted
+          <input
             type="text"
             value={formData.contact.instagram}
             onChange={(e) => handleContactChange('instagram', e.target.value)}
             placeholder="Instagram"
             className="input-medium"
           />
-          <input abileted
+          <input
             type="text"
             value={formData.contact.facebook}
             onChange={(e) => handleContactChange('facebook', e.target.value)}
